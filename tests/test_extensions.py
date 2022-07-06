@@ -43,6 +43,10 @@ class TestExtensions(unittest.TestCase):
         file_url = file_url_split.FileUrlSplit('/home/user/todo.text.tar.gz')
         self.assertEqual(file_url.extension, '.tar.gz')
 
+    def test_complex_extension(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/todo.text.ta.gz')
+        self.assertEqual(file_url.extension, '.gz')
+
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main()  # pragma: no cover

@@ -186,5 +186,5 @@ class FileUrlSplit(object):
 
 
 if __name__ == "__main__":
-    import doctest
-    doctest.testmod()
+    import doctest  # pragma: no cover
+    doctest.testmod()  # pragma: no cover
