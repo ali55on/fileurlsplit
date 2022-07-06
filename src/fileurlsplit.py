@@ -5,10 +5,11 @@ import urllib.parse
 
 
 class FileUrlSplit(object):
-    """Slices of a URL
-    From the file you can get the full url, extension, name or path.
+    """Object that handles file url divisions
 
+    From the file you can get the full url, extension, name or path.
     Use '/path', 'c:\\path', or 'file:///path'
+
     >>> file_url_split = FileUrlSplit(file_url='file:///home/user/photo.png')
 
     >>> print(file_url_split)
@@ -36,6 +37,20 @@ class FileUrlSplit(object):
     """
 
     def __init__(self, file_url: str) -> None:
+        """Constructor
+
+        It will not be checked if the file from the passed URL already exists.
+        The goal is just to split the string.
+
+        The URL must be absolute or an exception will be raised. This means
+        that the string must start with a valid path prefix. Example: '/path',
+        'c:/path', 'file:///path'.
+
+        If the URL contains backslashes '\', then it must be escaped or passed
+        as a raw string. Example: r'C:\path', 'c:\\path'
+
+        :param file_url:
+        """
         self.__url = self.__get_url(file_url)
         self.__path = self.__get_path()
         self.__filename = self.__get_filename()
