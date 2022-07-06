@@ -59,22 +59,52 @@ class FileUrlSplit(object):
 
     @property
     def url(self) -> str:
+        """Get the clean url
+
+        URL without the file prefix, such as "file://".
+
+        :return: file url
+        """
         return self.__url
 
     @property
     def path(self) -> str:
+        """Get file path only
+
+        The path without the file name and extension.
+
+        :return: file path
+        """
         return self.__path
 
     @property
     def name(self) -> str:
+        """Get only the file name
+
+        File name without the extension and without the path.
+
+        :return: file name
+        """
         return self.__name
 
     @property
     def filename(self) -> str:
+        """Get only the filename
+
+        Filename with the extension but without the path.
+
+        :return: filename
+        """
         return self.__filename
 
     @property
     def extension(self) -> str:
+        """Get file extension only
+
+        Only the file extension without the name and path.
+
+        :return: file extension
+        """
         return self.__extension
 
     @staticmethod
