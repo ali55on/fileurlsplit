@@ -2,9 +2,11 @@
 
 A python class that handles file url divisions
 
-#### [Overview](#overview)
-#### [Properties](#properties:)
-#### [Tests](#tests)
+[Overview](#overview)
+
+[Properties](#properties)
+
+[Tests](#tests)
 
 ## overview
 
@@ -28,7 +30,7 @@ that the string must start with a valid path prefix. Example: '/path',
 If the URL contains backslashes '\', then it must be escaped or passed
 as a raw string, like: r'C:\path', 'c:\\path'
 
-## Properties:
+## Properties
 The properties are 'url', 'path', 'name', 'filename' and 'extension'.
 
 Examples:
