@@ -8,6 +8,8 @@ extension.
 It will not be checked if the file from the passed URL already exists.
 The goal is just to split the string.
 
+It also has no dependencies as it only uses the language standard library.
+
 #### Definition:
     FileUrlSplit(file_url: str)
 
