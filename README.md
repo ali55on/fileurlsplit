@@ -27,8 +27,8 @@ The URL must be absolute or an exception will be raised. This means
 that the string must start with a valid path prefix. Example: '/path',
 'c:/path', 'file:///path'.
 
-If the URL contains backslashes '\', then it must be escaped or passed
-as a raw string, like: r'C:\path', 'c:\\path'
+If the URL contains backslashes '\\', then it must be escaped or passed
+as a raw string, like: r'C:\path', 'c:\\\path'
 
 ## Properties
 The properties are 'url', 'path', 'name', 'filename' and 'extension'.
