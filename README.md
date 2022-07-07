@@ -1,10 +1,6 @@
 # FileUrlSplit
 
-A python class that handles file url divisions
-
 https://github.com/w-a-gomes/fileurlsplit
-
-## Overview
 
 A python class that handles file url divisions, such as path, name and 
 extension.
