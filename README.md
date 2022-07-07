@@ -36,27 +36,27 @@ The properties are 'url', 'path', 'name', 'filename' and 'extension'.
 Examples:
 
 Get url
-```pycon
+```Python console
 >>> file_url_split.url
 '/home/user/photo.png'
 ```
 Get only file path
-```pycon
+```Python console
 >>> file_url_split.path
 '/home/user/'
 ```
 Get only file name without the extension
-```pycon
+```Python console
 >>> file_url_split.name
 'photo'
 ```
 Get filename with the extension
-```pycon
+```Python console
 >>> file_url_split.filename
 'photo.png'
 ```
 Get file extension
-```pycon
+```Python console
 >>> file_url_split.extension
 '.png'
 ```
