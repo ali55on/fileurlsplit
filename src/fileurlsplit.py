@@ -8,8 +8,8 @@ class FileUrlSplit(object):
     """Object that handles file url divisions
 
     From the file you can get the full url, extension, name or path.
-    Use '/path', 'c:\\path', or 'file:///path'
 
+    Use '/path', 'c:\\path', or 'file:///path'
     >>> file_url_split = FileUrlSplit(file_url='file:///home/user/photo.png')
 
     >>> print(file_url_split)
