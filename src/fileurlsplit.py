@@ -152,7 +152,7 @@ class FileUrlSplit(object):
                     'It must be just the name. The name is not part of a full '
                     "URL, so it cannot contain slashes '/'")
 
-            if len(file_name) > 255:
+            if len(file_name + self.__extension) > 255:
                 raise ValueError(
                     'Very big name. '
                     'The size limit for filenames is 255 characters.')
@@ -210,6 +210,31 @@ class FileUrlSplit(object):
         :return: file extension
         """
         return self.__extension
+
+    @extension.setter
+    def extension(self, file_extension: str) -> None:
+        """
+
+        :param file_extension:
+        """
+        if file_extension != self.__extension:
+            if '/' in file_extension:
+                raise ValueError(
+                    'It must be just the filename. '
+                    'The filename is not part of a full URL, '
+                    "so it cannot contain slashes '/'")
+
+            if file_extension[0] != '.':
+                file_extension = '.' + file_extension
+
+            if len(self.__name + file_extension) > 255:
+                raise ValueError(
+                    'Very big name. '
+                    'The size limit for filenames is 255 characters.')
+
+            self.__extension = file_extension
+            self.__url = self.__path + self.__name + self.__extension
+            self.__filename = self.__get_filename()
 
     @staticmethod
     def __get_url(file_url: str) -> str:
