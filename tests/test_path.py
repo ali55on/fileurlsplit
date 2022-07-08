@@ -24,6 +24,10 @@ class TestPath(unittest.TestCase):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
         file_url.path = '/home/user/Downloads'
         self.assertEqual(file_url.path, '/home/user/Downloads/')
+        self.assertEqual(file_url.url, '/home/user/Downloads/text.txt')
+        self.assertEqual(file_url.name, 'text')
+        self.assertEqual(file_url.filename, 'text.txt')
+        self.assertEqual(file_url.extension, '.txt')
 
     def test_new_path_raises(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')

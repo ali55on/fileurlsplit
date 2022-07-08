@@ -49,7 +49,7 @@ class FileUrlSplit(object):
         If the URL contains backslashes '\', then it must be escaped or passed
         as a raw string. Example: r'C:\path', 'c:\\path'
 
-        :param file_url:
+        :param file_url: URL string
         """
         self.__url = self.__get_url(file_url)
         self.__path = self.__get_path()
@@ -63,7 +63,7 @@ class FileUrlSplit(object):
 
         URL without the file prefix, such as "file://".
 
-        :return: file url
+        :return: File url
         """
         return self.__url
 
@@ -76,7 +76,7 @@ class FileUrlSplit(object):
         This means that the string must start with a valid path prefix.
         Example: '/path', 'c:/path', 'file:///path'.
 
-        :param file_url: new URL string
+        :param file_url: New URL string
         """
         if file_url != self.__url:
             if file_url[0] != '/':
@@ -95,7 +95,7 @@ class FileUrlSplit(object):
 
         The path without the file name and extension.
 
-        :return: file path
+        :return: File path
         """
         return self.__path
 
@@ -106,8 +106,9 @@ class FileUrlSplit(object):
         The path must have absolute URL or an exception will be raised.
         This means that the string must start with a valid path prefix.
         Example: '/path', 'c:/path', 'file:///path'.
+        This also updates the 'url' propertie.
 
-        :param file_path: new path URL string
+        :param file_path: New path URL string
         """
         if file_path != self.__path:
             if file_path[0] != '/':
@@ -127,9 +128,26 @@ class FileUrlSplit(object):
 
         File name without the extension and without the path.
 
-        :return: file name
+        :return: File name
         """
         return self.__name
+
+    @name.setter
+    def name(self, file_name: str) -> None:
+        """Set a new name for the file
+
+        This also updates the 'url' and 'filename' properties.
+
+        :param file_name: string containing the file name
+        """
+        if file_name != self.__name:
+            if '/' in file_name:
+                raise ValueError(
+                    'It must be just the name. The name is not part of a full '
+                    "URL, so it cannot contain slashes '/'")
+            self.__name = file_name
+            self.__filename = self.__name + self.__extension
+            self.__url = self.__path + self.__filename
 
     @property
     def filename(self) -> str:

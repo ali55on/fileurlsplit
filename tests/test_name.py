@@ -28,6 +28,20 @@ class TestName(unittest.TestCase):
         file_url = file_url_split.FileUrlSplit('/home/user/.text')
         self.assertEqual(file_url.name, '.text')
 
+    def test_new_name(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
+        file_url.name = 'foo'
+        self.assertEqual(file_url.name, 'foo')
+        self.assertEqual(file_url.url, '/home/user/foo.txt')
+        self.assertEqual(file_url.filename, 'foo.txt')
+        self.assertEqual(file_url.path, '/home/user/')
+        self.assertEqual(file_url.extension, '.txt')
+
+    def test_new_name_raises(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
+        self.assertRaises(
+            ValueError, setattr, file_url, 'name', '/foo')
+
 
 if __name__ == '__main__':
     # No third-party testing coverage
