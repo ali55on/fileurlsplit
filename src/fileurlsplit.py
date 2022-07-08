@@ -137,6 +137,12 @@ class FileUrlSplit(object):
         """Set a new name for the file
 
         This also updates the 'url' and 'filename' properties.
+        The extension doesn't change, so just pass the filename without the
+        extension.
+        If you want to pass a name along with the extension and change
+        everything at once, use the "filename" property of this class.
+        If you only want to change the file extension, use the "extension"
+        property.
 
         :param file_name: string containing the file name
         """
@@ -145,6 +151,12 @@ class FileUrlSplit(object):
                 raise ValueError(
                     'It must be just the name. The name is not part of a full '
                     "URL, so it cannot contain slashes '/'")
+
+            if len(file_name) > 255:
+                raise ValueError(
+                    'Very big name. '
+                    'The size limit for filenames is 255 characters.')
+
             self.__name = file_name
             self.__filename = self.__name + self.__extension
             self.__url = self.__path + self.__filename
@@ -158,6 +170,36 @@ class FileUrlSplit(object):
         :return: filename
         """
         return self.__filename
+
+    @filename.setter
+    def filename(self, filename: str) -> None:
+        """Set a new filename for the file
+
+        This also updates the 'url', 'name' and 'extension' properties.
+        It must contain the file extension, such as "foo.txt". If you don't
+        pass the name along with the extension, then the existing extension
+        will be removed.
+        If you want to change the name of the file without changing the
+        existing extension, use the "name" property of this class.
+
+        :param filename: string containing the filename
+        """
+        if filename != self.__filename:
+            if '/' in filename:
+                raise ValueError(
+                    'It must be just the filename. '
+                    'The filename is not part of a full URL, '
+                    "so it cannot contain slashes '/'")
+
+            if len(filename) > 255:
+                raise ValueError(
+                    'Very big name. '
+                    'The size limit for filenames is 255 characters.')
+
+            self.__filename = filename
+            self.__url = self.__path + self.__filename
+            self.__extension = self.__get_extension()
+            self.__name = self.__get_name()
 
     @property
     def extension(self) -> str:

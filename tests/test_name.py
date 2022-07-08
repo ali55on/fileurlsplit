@@ -34,13 +34,17 @@ class TestName(unittest.TestCase):
         self.assertEqual(file_url.name, 'foo')
         self.assertEqual(file_url.url, '/home/user/foo.txt')
         self.assertEqual(file_url.filename, 'foo.txt')
-        self.assertEqual(file_url.path, '/home/user/')
-        self.assertEqual(file_url.extension, '.txt')
 
     def test_new_name_raises(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
         self.assertRaises(
             ValueError, setattr, file_url, 'name', '/foo')
+
+    def test_very_big_new_name_raises(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
+        new_name = 'A' * 256
+        self.assertRaises(
+            ValueError, setattr, file_url, 'name', new_name)
 
 
 if __name__ == '__main__':
