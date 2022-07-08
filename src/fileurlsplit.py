@@ -69,9 +69,12 @@ class FileUrlSplit(object):
 
     @url.setter
     def url(self, file_url: str) -> None:
-        """set up a new URL
+        """Set up a new URL
 
         A new URL can change all other properties.
+        The URL must be absolute or an exception will be raised.
+        This means that the string must start with a valid path prefix.
+        Example: '/path', 'c:/path', 'file:///path'.
 
         :param file_url: new URL string
         """
@@ -97,7 +100,15 @@ class FileUrlSplit(object):
         return self.__path
 
     @path.setter
-    def path(self, file_path):
+    def path(self, file_path) -> None:
+        """Set a new path to the file
+
+        The path must have absolute URL or an exception will be raised.
+        This means that the string must start with a valid path prefix.
+        Example: '/path', 'c:/path', 'file:///path'.
+
+        :param file_path: new path URL string
+        """
         if file_path != self.__path:
             if file_path[0] != '/':
                 raise ValueError(
