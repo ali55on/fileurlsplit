@@ -11,5 +11,5 @@ coverage
     coverage run -m unittest discover && coverage report -m
 
 TODO:
-    extension-setter tests and docstrings
+    extension-setter tests
     custom errors

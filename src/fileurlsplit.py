@@ -144,7 +144,7 @@ class FileUrlSplit(object):
         If you only want to change the file extension, use the "extension"
         property.
 
-        :param file_name: string containing the file name
+        :param file_name: String containing the file name
         """
         if file_name != self.__name:
             if '/' in file_name:
@@ -167,7 +167,7 @@ class FileUrlSplit(object):
 
         Filename with the extension but without the path.
 
-        :return: filename
+        :return: Filename
         """
         return self.__filename
 
@@ -182,7 +182,7 @@ class FileUrlSplit(object):
         If you want to change the name of the file without changing the
         existing extension, use the "name" property of this class.
 
-        :param filename: string containing the filename
+        :param filename: String containing the filename
         """
         if filename != self.__filename:
             if '/' in filename:
@@ -207,15 +207,17 @@ class FileUrlSplit(object):
 
         Only the file extension without the name and path.
 
-        :return: file extension
+        :return: File extension
         """
         return self.__extension
 
     @extension.setter
     def extension(self, file_extension: str) -> None:
-        """
+        """Set a new extension for the file
 
-        :param file_extension:
+        This also updates the 'url', and 'filename'properties.
+
+        :param file_extension: String containing the filename extension
         """
         if file_extension != self.__extension:
             if '/' in file_extension:

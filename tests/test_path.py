@@ -28,7 +28,6 @@ class TestPath(unittest.TestCase):
 
     def test_new_path_raises(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
-        # Works
         self.assertRaises(
             ValueError, setattr, file_url, 'path', 'home/user/Downloads')
         # Also works

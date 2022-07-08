@@ -47,6 +47,41 @@ class TestExtensions(unittest.TestCase):
         file_url = file_url_split.FileUrlSplit('/home/user/todo.text.ta.gz')
         self.assertEqual(file_url.extension, '.gz')
 
+    def test_new_extension(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
+        file_url.extension = '.pdf'
+        self.assertEqual(file_url.extension, '.pdf')
+        self.assertEqual(file_url.url, '/home/user/text.pdf')
+        self.assertEqual(file_url.filename, 'text.pdf')
+
+    def test_new_extension_without_a_dot(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
+        file_url.extension = 'pdf'
+        self.assertEqual(file_url.extension, '.pdf')
+        self.assertEqual(file_url.url, '/home/user/text.pdf')
+        self.assertEqual(file_url.filename, 'text.pdf')
+
+    def test_new_extension_raises(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
+        self.assertRaises(
+            ValueError, setattr, file_url, 'extension', '/pdf')
+
+    def test_very_big_new_name_with_extension_raises(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/x.txt')
+        new_extension = 'x' * 255
+        self.assertRaises(
+            ValueError, setattr, file_url, 'extension', new_extension)
+        self.assertRaises(
+            ValueError, setattr, file_url, 'extension', '.' + new_extension)
+
+    def test_very_big_new_name_without_extension_raises(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/x')
+        new_extension = 'x' * 255
+        self.assertRaises(
+            ValueError, setattr, file_url, 'extension', new_extension)
+        self.assertRaises(
+            ValueError, setattr, file_url, 'extension', '.' + new_extension)
+
 
 if __name__ == '__main__':
     # No third-party testing coverage
