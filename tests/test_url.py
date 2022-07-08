@@ -28,6 +28,17 @@ class TestUrl(unittest.TestCase):
         file_url = file_url_split.FileUrlSplit(r'c:\windows\user\text.txt')
         self.assertEqual(file_url.url, '/windows/user/text.txt')
 
+    def test_new_url(self):
+        file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')
+        file_url.url = '/home/user/Downloads/image.png'
+        self.assertEqual(file_url.url, '/home/user/Downloads/image.png')
+
+    def test_new_url_raises(self):
+        file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')
+        self.assertRaises(
+            ValueError, setattr, file_url, 'url', 'user/Downloads/text.txt')
+
 
 if __name__ == '__main__':
+    # No third-party testing coverage
     unittest.main()  # pragma: no cover

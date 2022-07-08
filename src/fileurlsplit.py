@@ -67,6 +67,25 @@ class FileUrlSplit(object):
         """
         return self.__url
 
+    @url.setter
+    def url(self, file_url: str) -> None:
+        """set up a new URL
+
+        A new URL can change all other properties.
+
+        :param file_url: new URL string
+        """
+        if file_url != self.__url:
+            if file_url[0] != '/':
+                raise ValueError(
+                    'You need an absolute URL like: '
+                    '"/path", "file://path", "file:///path" or "c:/path"')
+            self.__url = self.__get_url(file_url)
+            self.__path = self.__get_path()
+            self.__filename = self.__get_filename()
+            self.__extension = self.__get_extension()
+            self.__name = self.__get_name()
+
     @property
     def path(self) -> str:
         """Get file path only
@@ -76,6 +95,20 @@ class FileUrlSplit(object):
         :return: file path
         """
         return self.__path
+
+    @path.setter
+    def path(self, file_path):
+        if file_path != self.__path:
+            if file_path[0] != '/':
+                raise ValueError(
+                    'You need an absolute URL path like: '
+                    '"/path", "file://path", "file:///path" or "c:/path"')
+
+            if file_path[-1] != '/':
+                file_path = file_path + '/'
+
+            self.__url = self.__get_url(file_path + self.__filename)
+            self.__path = self.__get_path()
 
     @property
     def name(self) -> str:
@@ -186,5 +219,6 @@ class FileUrlSplit(object):
 
 
 if __name__ == "__main__":
-    import doctest  # pragma: no cover
+    # No third-party testing coverage
+    import doctest     # pragma: no cover
     doctest.testmod()  # pragma: no cover

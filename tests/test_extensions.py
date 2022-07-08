@@ -49,4 +49,5 @@ class TestExtensions(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    # No third-party testing coverage
     unittest.main()  # pragma: no cover

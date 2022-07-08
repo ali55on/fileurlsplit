@@ -20,6 +20,21 @@ class TestPath(unittest.TestCase):
         file_url = file_url_split.FileUrlSplit('/home/user/')
         self.assertEqual(file_url.path, '/home/user/')
 
+    def test_new_path(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
+        file_url.path = '/home/user/Downloads'
+        self.assertEqual(file_url.path, '/home/user/Downloads/')
+
+    def test_new_path_raises(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
+        # Works
+        self.assertRaises(
+            ValueError, setattr, file_url, 'path', 'home/user/Downloads')
+        # Also works
+        with self.assertRaises(ValueError):
+            file_url.path = 'home/user/Downloads'
+
 
 if __name__ == '__main__':
+    # No third-party testing coverage
     unittest.main()  # pragma: no cover
