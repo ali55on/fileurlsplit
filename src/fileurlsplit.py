@@ -173,7 +173,7 @@ class FileUrlSplit(object):
         :param file_name: String containing the file name
         """
         if file_name != self.__name:
-            if '/' in file_name:
+            if '/' in file_name or '\\' in file_name:
                 raise InvalidCharacterError(
                     'It must be just the name. The name is not part of a full '
                     "URL, so it cannot contain slashes '/'")
@@ -211,7 +211,7 @@ class FileUrlSplit(object):
         :param filename: String containing the filename
         """
         if filename != self.__filename:
-            if '/' in filename:
+            if '/' in filename or '\\' in filename:
                 raise InvalidCharacterError(
                     'It must be just the filename. '
                     'The filename is not part of a full URL, '
@@ -246,7 +246,7 @@ class FileUrlSplit(object):
         :param file_extension: String containing the filename extension
         """
         if file_extension != self.__extension:
-            if '/' in file_extension:
+            if '/' in file_extension or '\\' in file_extension:
                 raise InvalidCharacterError(
                     'It must be just the filename. '
                     'The filename is not part of a full URL, '
@@ -271,11 +271,18 @@ class FileUrlSplit(object):
 
         # Fix slash
         file_url = file_url.replace('\\', '/')
-        if file_url.lower()[:2] != 'c:' and file_url.lower()[:5] != 'file:':
+
+        # Raise a non-absolute path
+        absolute_path_error_msg = (
+            'You need an absolute URL like: '
+            '"/path", "file://path", "file:///path" or "c:/path"')
+        prefix_match = re.search(r'^\w+:', file_url)  # file prefix -> c: file:
+        if prefix_match:
+            if file_url[prefix_match.end():][0] != '/':
+                raise AbsolutePathError(absolute_path_error_msg)
+        else:
             if file_url[0] != '/':
-                raise AbsolutePathError(
-                    'You need an absolute URL like: '
-                    '"/path", "file://path", "file:///path" or "c:/path"')
+                raise AbsolutePathError(absolute_path_error_msg)
 
         # Match - remove prefix like "file://", "c:/"
         match = re.search(r'/\w.+$', file_url)
