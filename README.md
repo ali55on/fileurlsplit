@@ -78,23 +78,18 @@ Useful for choosing names for multiple files without changing their extensions.
 >>> files = [
 ... FileUrlSplit(os.path.abspath(x)) for x in os.listdir() if os.path.isfile(x)
 ... ]
->>> for f in files:
-...     print(f.url)
+>>> for num, file_url in enumerate(files):
+...     print(f'old "{file_url.url}"')
+...     file_url.name = f'New name {num}'
+...     print(f'new "{file_url.url}"')
+...     print()
 ...     
 ... 
-/home/user/fileurlsplit/src/__init__.py
-/home/user/fileurlsplit/src/fileurlsplit.py
->>>
->>> for n, f in enumerate(files):
-...     f.name = f'New name {n}'
-...     
-... 
->>> for f in files:
-...     print(f.url)
-...     
-... 
-/home/user/fileurlsplit/src/New name 0.py
-/home/user/fileurlsplit/src/New name 1.py
+old "/home/user/fileurlsplit/src/__init__.py"
+new "/home/user/fileurlsplit/src/New name 0.py"
+
+old "/home/user/fileurlsplit/src/fileurlsplit.py"
+new "/home/user/fileurlsplit/src/New name 1.py"
 >>>
 ```
 ## Tests
