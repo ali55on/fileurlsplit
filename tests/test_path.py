@@ -5,8 +5,6 @@ import src.fileurlsplit as file_url_split
 
 
 class TestPath(unittest.TestCase):
-    def setUp(self):
-        pass
 
     def test_path(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
@@ -26,12 +24,16 @@ class TestPath(unittest.TestCase):
         self.assertEqual(file_url.path, '/home/user/Downloads/')
         self.assertEqual(file_url.url, '/home/user/Downloads/text.txt')
 
+
+class TestPathRaises(unittest.TestCase):
+
     def test_new_path_raises(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
         self.assertRaises(
-            ValueError, setattr, file_url, 'path', 'home/user/Downloads')
+            file_url_split.AbsolutePathError,
+            setattr, file_url, 'path', 'home/user/Downloads')
         # Also works
-        with self.assertRaises(ValueError):
+        with self.assertRaises(file_url_split.AbsolutePathError):
             file_url.path = 'home/user/Downloads'
 
 

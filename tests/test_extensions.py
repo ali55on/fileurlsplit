@@ -8,8 +8,6 @@ import src.fileurlsplit as file_url_split
 
 
 class TestExtensions(unittest.TestCase):
-    def setUp(self):
-        pass
 
     def test_extension(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
@@ -61,26 +59,34 @@ class TestExtensions(unittest.TestCase):
         self.assertEqual(file_url.url, '/home/user/text.pdf')
         self.assertEqual(file_url.filename, 'text.pdf')
 
+
+class TestExtensionsRaises(unittest.TestCase):
+
     def test_new_extension_raises(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
         self.assertRaises(
-            ValueError, setattr, file_url, 'extension', '/pdf')
+            file_url_split.InvalidCharacterError,
+            setattr, file_url, 'extension', '/pdf')
 
     def test_very_big_new_name_with_extension_raises(self):
         file_url = file_url_split.FileUrlSplit('/home/user/x.txt')
         new_extension = 'x' * 255
         self.assertRaises(
-            ValueError, setattr, file_url, 'extension', new_extension)
+            file_url_split.FilenameTooLongError,
+            setattr, file_url, 'extension', new_extension)
         self.assertRaises(
-            ValueError, setattr, file_url, 'extension', '.' + new_extension)
+            file_url_split.FilenameTooLongError,
+            setattr, file_url, 'extension', '.' + new_extension)
 
     def test_very_big_new_name_without_extension_raises(self):
         file_url = file_url_split.FileUrlSplit('/home/user/x')
         new_extension = 'x' * 255
         self.assertRaises(
-            ValueError, setattr, file_url, 'extension', new_extension)
+            file_url_split.FilenameTooLongError,
+            setattr, file_url, 'extension', new_extension)
         self.assertRaises(
-            ValueError, setattr, file_url, 'extension', '.' + new_extension)
+            file_url_split.FilenameTooLongError,
+            setattr, file_url, 'extension', '.' + new_extension)
 
 
 if __name__ == '__main__':

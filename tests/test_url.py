@@ -5,8 +5,6 @@ import src.fileurlsplit as file_url_split
 
 
 class TestUrl(unittest.TestCase):
-    def setUp(self):
-        pass
 
     def test_url(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
@@ -37,10 +35,14 @@ class TestUrl(unittest.TestCase):
         self.assertEqual(file_url.filename, 'image.png')
         self.assertEqual(file_url.extension, '.png')
 
+
+class TestUrlRaises(unittest.TestCase):
+
     def test_new_url_raises(self):
         file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')
         self.assertRaises(
-            ValueError, setattr, file_url, 'url', 'user/Downloads/text.txt')
+            file_url_split.AbsolutePathError,
+            setattr, file_url, 'url', 'user/Downloads/text.txt')
 
 
 if __name__ == '__main__':

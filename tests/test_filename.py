@@ -5,8 +5,6 @@ import src.fileurlsplit as file_url_split
 
 
 class TestFilename(unittest.TestCase):
-    def setUp(self):
-        pass
 
     def test_filename(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
@@ -36,16 +34,21 @@ class TestFilename(unittest.TestCase):
         self.assertEqual(file_url.url, '/home/user/foo.png')
         self.assertEqual(file_url.extension, '.png')
 
+
+class TestFilenameRaises(unittest.TestCase):
+
     def test_new_filename_raises(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
         self.assertRaises(
-            ValueError, setattr, file_url, 'filename', '/foo.txt')
+            file_url_split.InvalidCharacterError,
+            setattr, file_url, 'filename', '/foo.txt')
 
     def test_very_big_new_filename_raises(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
         new_name = 'A' * 256
         self.assertRaises(
-            ValueError, setattr, file_url, 'filename', new_name)
+            file_url_split.FilenameTooLongError,
+            setattr, file_url, 'filename', new_name)
 
 
 if __name__ == '__main__':

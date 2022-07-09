@@ -4,6 +4,32 @@ import re
 import urllib.parse
 
 
+class Error(Exception):
+    """Exception base class"""
+    pass
+
+
+class FilenameTooLongError(Error):
+    """Raised when the file name is too long.
+    Usually longer than 255 characters.
+    """
+    pass
+
+
+class AbsolutePathError(Error):
+    """Raised when a passed URL doesn't have an absolute path
+    prefix like a slash "/" or "file://".
+    """
+    pass
+
+
+class InvalidCharacterError(Error):
+    """Raised when the string contains a character not allowed
+    for the desired action.
+    """
+    pass
+
+
 class FileUrlSplit(object):
     """Object that handles file url divisions
 
@@ -80,7 +106,7 @@ class FileUrlSplit(object):
         """
         if file_url != self.__url:
             if file_url[0] != '/':
-                raise ValueError(
+                raise AbsolutePathError(
                     'You need an absolute URL like: '
                     '"/path", "file://path", "file:///path" or "c:/path"')
             self.__url = self.__get_url(file_url)
@@ -112,7 +138,7 @@ class FileUrlSplit(object):
         """
         if file_path != self.__path:
             if file_path[0] != '/':
-                raise ValueError(
+                raise AbsolutePathError(
                     'You need an absolute URL path like: '
                     '"/path", "file://path", "file:///path" or "c:/path"')
 
@@ -148,12 +174,12 @@ class FileUrlSplit(object):
         """
         if file_name != self.__name:
             if '/' in file_name:
-                raise ValueError(
+                raise InvalidCharacterError(
                     'It must be just the name. The name is not part of a full '
                     "URL, so it cannot contain slashes '/'")
 
             if len(file_name + self.__extension) > 255:
-                raise ValueError(
+                raise FilenameTooLongError(
                     'Very big name. '
                     'The size limit for filenames is 255 characters.')
 
@@ -186,13 +212,13 @@ class FileUrlSplit(object):
         """
         if filename != self.__filename:
             if '/' in filename:
-                raise ValueError(
+                raise InvalidCharacterError(
                     'It must be just the filename. '
                     'The filename is not part of a full URL, '
                     "so it cannot contain slashes '/'")
 
             if len(filename) > 255:
-                raise ValueError(
+                raise FilenameTooLongError(
                     'Very big name. '
                     'The size limit for filenames is 255 characters.')
 
@@ -221,7 +247,7 @@ class FileUrlSplit(object):
         """
         if file_extension != self.__extension:
             if '/' in file_extension:
-                raise ValueError(
+                raise InvalidCharacterError(
                     'It must be just the filename. '
                     'The filename is not part of a full URL, '
                     "so it cannot contain slashes '/'")
@@ -230,7 +256,7 @@ class FileUrlSplit(object):
                 file_extension = '.' + file_extension
 
             if len(self.__name + file_extension) > 255:
-                raise ValueError(
+                raise FilenameTooLongError(
                     'Very big name. '
                     'The size limit for filenames is 255 characters.')
 
@@ -247,7 +273,7 @@ class FileUrlSplit(object):
         file_url = file_url.replace('\\', '/')
         if file_url.lower()[:2] != 'c:' and file_url.lower()[:5] != 'file:':
             if file_url[0] != '/':
-                raise ValueError(
+                raise AbsolutePathError(
                     'You need an absolute URL like: '
                     '"/path", "file://path", "file:///path" or "c:/path"')
 
