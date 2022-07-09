@@ -39,7 +39,7 @@ class FileUrlSplit(object):
     >>> file_url_split = FileUrlSplit(file_url='file:///home/user/photo.png')
 
     >>> print(file_url_split)
-    <FileUrlSplit '/home/user/photo.png'>
+    FileUrlSplit("/home/user/photo.png")
 
     Get url
     >>> file_url_split.url
@@ -288,7 +288,8 @@ class FileUrlSplit(object):
 
     def __get_path(self) -> str:
         # Returns only the file path
-        return os.path.dirname(self.__url) + '/'
+        path = os.path.dirname(self.__url)
+        return path if path == '/' else path + '/'
 
     def __get_filename(self) -> str:
         # Returns the filename with the extension
@@ -339,7 +340,7 @@ class FileUrlSplit(object):
         return self.__filename.replace(self.__extension, '')
 
     def __repr__(self):
-        return f"<FileUrlSplit '{self.__url}'>"
+        return f'FileUrlSplit("{self.__url}")'
 
 
 if __name__ == "__main__":

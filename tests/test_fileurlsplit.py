@@ -9,7 +9,7 @@ class TestUrl(unittest.TestCase):
     def test_repr_obj(self):
         self.assertEqual(
             repr(file_url_split.FileUrlSplit('/home/user/text.txt')),
-            "<FileUrlSplit '/home/user/text.txt'>")
+            'FileUrlSplit("/home/user/text.txt")')
 
 
 class TestUrlRaises(unittest.TestCase):

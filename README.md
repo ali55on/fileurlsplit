@@ -18,7 +18,7 @@ as an argument, a string that represents the url of a file.
 ```Python console
 >>> file_url = FileUrlSplit(file_url='file:///home/user/photo.png')
 >>> print(file_url)
-<FileUrlSplit '/home/user/photo.png'>
+FileUrlSplit("/home/user/photo.png")
 ```
 
 #### Exception:
@@ -33,32 +33,33 @@ The URL must be absolute or an exception will be raised. This means
 The properties are 'url', 'path', 'name', 'filename' and 'extension'. See 
 the examples.
 
-Get url
+url
 ```Python console
 >>> file_url.url
 '/home/user/photo.png'
 ```
-Get only file path
+path
 ```Python console
 >>> file_url.path
 '/home/user/'
 ```
-Get only file name without the extension
+file name without the extension
 ```Python console
 >>> file_url.name
 'photo'
 ```
-Get filename with the extension
+filename with the extension
 ```Python console
 >>> file_url.filename
 'photo.png'
 ```
-Get file extension
+extension
 ```Python console
 >>> file_url.extension
 '.png'
 ```
-
+#### Setters:
+#add setter description
 ## Tests
 Download the Git repository and with the terminal enter the 
 project directory.
