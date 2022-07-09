@@ -80,7 +80,9 @@ Useful for choosing names for multiple files without changing their extensions.
 ... ]
 >>> for num, file_url in enumerate(files):
 ...     print(f'old "{file_url.url}"')
+...
 ...     file_url.name = f'New name {num}'
+...
 ...     print(f'new "{file_url.url}"')
 ...     print()
 ...     
