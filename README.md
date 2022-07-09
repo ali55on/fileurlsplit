@@ -61,7 +61,7 @@ extension
 ```
 #### Setters:
 Updating a property will affect related properties.
-```Pyton console
+```Python console
 >>> print(f"'{file_url.url}', '{file_url.filename}', '{file_url.extension}'")
 '/home/user/photo.png', 'photo.png', '.png'
 >>>
