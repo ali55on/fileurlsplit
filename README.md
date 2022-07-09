@@ -5,8 +5,9 @@ https://github.com/w-a-gomes/fileurlsplit
 A python class that handles file url divisions, such as path, name and 
 extension.
 
-It will not be checked if the file from the passed URL already exists.
-The goal is just to split the string.
+It will not check if the file from the given URL already exists, nor will it 
+change the name or path of an actual file. The point is just to split and 
+work with the string.
 
 It also has no dependencies as it only uses the language standard library.
 
@@ -27,7 +28,7 @@ The URL must be absolute or an exception will be raised. This means
   'c:/path', 'file:///path'.
 
   If the URL contains backslashes '\\', then it must be escaped or passed
-  as a raw string, like: r'C:\path', 'c:\\\path'
+  as a raw string, like: r'c:\path', 'c:\\\path'
 
 #### Properties:
 The properties are 'url', 'path', 'name', 'filename' and 'extension'. See 
@@ -59,7 +60,43 @@ extension
 '.png'
 ```
 #### Setters:
-#add setter description
+Updating a property will affect related properties.
+```Pyton console
+>>> print(f"'{file_url.url}', '{file_url.filename}', '{file_url.extension}'")
+'/home/user/photo.png', 'photo.png', '.png'
+>>>
+>>> file_url.extension = 'jpg'
+>>>
+>>> print(f"'{file_url.url}', '{file_url.filename}', '{file_url.extension}'")
+'/home/user/photo.jpg', 'photo.jpg', '.jpg'
+```
+Useful for choosing names for multiple files without changing their extensions.
+```Python console
+>>> import os
+>>> from fileurlsplit import FileUrlSplit
+>>>
+>>> files = [
+... FileUrlSplit(os.path.abspath(x)) for x in os.listdir() if os.path.isfile(x)
+... ]
+>>> for f in files:
+...     print(f.url)
+...     
+... 
+/home/user/fileurlsplit/src/__init__.py
+/home/user/fileurlsplit/src/fileurlsplit.py
+>>>
+>>> for n, f in enumerate(files):
+...     f.name = f'New name {n}'
+...     
+... 
+>>> for f in files:
+...     print(f.url)
+...     
+... 
+/home/user/fileurlsplit/src/New name 0.py
+/home/user/fileurlsplit/src/New name 1.py
+>>>
+```
 ## Tests
 Download the Git repository and with the terminal enter the 
 project directory.
