@@ -26,7 +26,7 @@ class TestUrl(unittest.TestCase):
         file_url = file_url_split.FileUrlSplit(r'c:\windows\user\text.txt')
         self.assertEqual(file_url.url, '/windows/user/text.txt')
 
-    def test_new_url(self):
+    def test_new_pure_url(self):
         file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')
         file_url.url = '/home/user/Downloads/image.png'
         self.assertEqual(file_url.url, '/home/user/Downloads/image.png')
@@ -34,6 +34,21 @@ class TestUrl(unittest.TestCase):
         self.assertEqual(file_url.name, 'image')
         self.assertEqual(file_url.filename, 'image.png')
         self.assertEqual(file_url.extension, '.png')
+
+    def test_new_prefix_url(self):
+        file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')
+        file_url.url = 'file:/home/user/Downloads/image.png'
+        self.assertEqual(file_url.url, '/home/user/Downloads/image.png')
+        self.assertEqual(file_url.path, '/home/user/Downloads/')
+        self.assertEqual(file_url.name, 'image')
+        self.assertEqual(file_url.filename, 'image.png')
+        self.assertEqual(file_url.extension, '.png')
+
+        file_url.url = 'file:///home/user/Documents/image.png'
+        self.assertEqual(file_url.url, '/home/user/Documents/image.png')
+
+        file_url.url = 'c:/home/user/Desktop/image.png'
+        self.assertEqual(file_url.url, '/home/user/Desktop/image.png')
 
 
 class TestUrlRaises(unittest.TestCase):

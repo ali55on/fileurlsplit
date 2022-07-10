@@ -105,10 +105,6 @@ class FileUrlSplit(object):
         :param file_url: New URL string
         """
         if file_url != self.__url:
-            if file_url[0] != '/':
-                raise AbsolutePathError(
-                    'You need an absolute URL like: '
-                    '"/path", "file://path", "file:///path" or "c:/path"')
             self.__url = self.__get_url(file_url)
             self.__path = self.__get_path()
             self.__filename = self.__get_filename()
@@ -126,7 +122,7 @@ class FileUrlSplit(object):
         return self.__path
 
     @path.setter
-    def path(self, file_path) -> None:
+    def path(self, file_path: str) -> None:
         """Set a new path to the file
 
         The path must have absolute URL or an exception will be raised.
@@ -137,11 +133,6 @@ class FileUrlSplit(object):
         :param file_path: New path URL string
         """
         if file_path != self.__path:
-            if file_path[0] != '/':
-                raise AbsolutePathError(
-                    'You need an absolute URL path like: '
-                    '"/path", "file://path", "file:///path" or "c:/path"')
-
             if file_path[-1] != '/':
                 file_path = file_path + '/'
 

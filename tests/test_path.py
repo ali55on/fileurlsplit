@@ -18,11 +18,25 @@ class TestPath(unittest.TestCase):
         file_url = file_url_split.FileUrlSplit('/home/user/')
         self.assertEqual(file_url.path, '/home/user/')
 
-    def test_new_path(self):
+    def test_new_pure_path(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
         file_url.path = '/home/user/Downloads'
         self.assertEqual(file_url.path, '/home/user/Downloads/')
         self.assertEqual(file_url.url, '/home/user/Downloads/text.txt')
+
+    def test_new_prefix_path(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
+        file_url.path = 'file:///home/user/Downloads'
+        self.assertEqual(file_url.path, '/home/user/Downloads/')
+        self.assertEqual(file_url.url, '/home/user/Downloads/text.txt')
+
+        file_url.path = 'file:/home/user/Documents/'
+        self.assertEqual(file_url.path, '/home/user/Documents/')
+        self.assertEqual(file_url.url, '/home/user/Documents/text.txt')
+
+        file_url.path = 'c:/home/user/Desktop'
+        self.assertEqual(file_url.path, '/home/user/Desktop/')
+        self.assertEqual(file_url.url, '/home/user/Desktop/text.txt')
 
 
 class TestPathRaises(unittest.TestCase):
