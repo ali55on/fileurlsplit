@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 import os
 import re
-import string
-import sys
 import urllib.parse
 
 
@@ -30,122 +28,6 @@ class InvalidCharacterError(Error):
     for the desired action.
     """
     pass
-
-
-class ValidWindowsFilename(object):
-    def __init__(self, filename: str):
-        self.__filename = filename
-        self.__all_invalid_strings = self.__get_all_invalid_strings()
-        self.__is_valid_filename = self.__get_is_valid_filename()
-        self.__warning_msg = None
-        self.__invalid_string_found = None
-
-    def __get_is_valid_filename(self) -> bool:
-        # 'starts-with'
-        for invalid_item in self.__all_invalid_strings['starts-with']:
-            if self.__filename.startswith(invalid_item):
-                self.__warning_msg = f"cannot start with '{invalid_item}'"
-                self.__invalid_string_found = invalid_item
-                return False
-
-        # 'any-position'
-        for invalid_item in self.__all_invalid_strings['any-position']:
-            if invalid_item in self.__filename:
-                self.__warning_msg = f"Cannot contain '{invalid_item}'"
-                self.__invalid_string_found = invalid_item
-                return False
-
-        return True
-
-    @staticmethod
-    def __get_all_invalid_strings() -> dict:
-        return {
-            'starts-with': ['0x00', '0xFF', '0xE5'],
-            'any-position': [
-                # chars
-                '"', '*', '/', ':', '<', '>', '?', '\\', '|', '+', ',',
-                '.', ';', '=', '[', ']', '!', '@',
-                # hex unit
-                '0x0', '0x1', '0x2', '0x3', '0x4', '0x5', '0x6', '0x7', '0x8',
-                '0x9', '0xa', '0xb', '0xc', '0xd', '0xe', '0xf',
-                # hex 0_unit
-                '0x00', '0x01', '0x02', '0x03', '0x04', '0x05', '0x06', '0x07',
-                '0x08', '0x09', '0x0a', '0x0b', '0x0c', '0x0d', '0x0e', '0x0f',
-                # hex ten
-                '0x10', '0x11', '0x12', '0x13', '0x14', '0x15', '0x16', '0x17',
-                '0x18', '0x19', '0x1a', '0x1b', '0x1c', '0x1d', '0x1e', '0x1f',
-                # hex unit: upper
-                '0xA', '0xB', '0xC', '0xD', '0xE', '0xF',
-                # hex 0_unit: upper
-                '0x0A', '0x0B', '0x0C', '0x0D', '0x0E', '0x0F',
-                # hex ten: upper
-                '0x1A', '0x1B', '0x1C', '0x1D', '0x1E', '0x1F',
-                # hex ++
-                '0x7F', '0x7f']}
-
-
-class ValidWindowsPath(object):
-    def __init__(self, path: str):
-        self.__path = path
-        self.__all_invalid_strings = self.__get_all_invalid_strings()
-        self.__is_valid_path = self.__get_is_valid_path()
-        self.__warning_msg = None
-        self.__invalid_string_found = None
-
-    def __get_is_valid_path(self) -> bool:
-        # 'reserved-paths'
-        for invalid_item in self.__all_invalid_strings['reserved-paths']:
-            if invalid_item in self.__path:
-                self.__warning_msg = f"Cannot contain '{invalid_item}'"
-                self.__invalid_string_found = invalid_item
-                return False
-
-        # 'reserved-directory-names'
-        for reserved_dir in self.__all_invalid_strings[
-                'reserved-directory-names']:
-            for path_dir in self.__path.split('/'):
-                if path_dir == reserved_dir:
-                    self.__warning_msg = f"Cannot contain '{reserved_dir}'"
-                    self.__invalid_string_found = reserved_dir
-                    return False
-
-        return True
-
-    @staticmethod
-    def __get_all_invalid_strings() -> dict:
-        return {
-            'reserved-paths': [
-                '$Extend/$ObjId', '$Extend/$Quota', '$Extend/$Reparse'],
-            'reserved-directory-names': [
-                '$Quota', '$ObjId', '$Reparse',
-                # devices
-                '$', '$IDLE$', 'AUX', 'COM1', 'COM2', 'COM3', 'COM4',
-                'CON', 'CONFIG$', 'CLOCK$', 'KEYBD$', 'LPT1', 'LPT2',
-                'LPT3', 'LPT4', 'LST', 'NUL', 'PRN', 'SCREEN$',
-                # root
-                '$AttrDef', '$BadClus', '$Bitmap', '$Boot', '$LogFile',
-                '$MFT', '$MFTMirr', 'pagefile.sys', '$Secure', '$UpCase',
-                '$Volume', '$Extend']}
-
-
-class ValidName(object):
-    def __init__(self):
-        self.__platform = self.__get_platform()
-        self.__safe_valid_chars = list(
-            string.ascii_letters + string.digits + '~ -_.')
-
-    @staticmethod
-    def __get_platform() -> str:
-        if sys.platform.startswith('linux'):
-            return 'linux'
-        elif 'bsd' in sys.platform:
-            return 'bsd'
-        elif 'darwin' in sys.platform:
-            return 'mac'
-        elif 'win' in sys.platform or 'msys' in sys.platform:
-            return 'windows'
-        else:
-            return 'other'
 
 
 class FileUrlSplit(object):
