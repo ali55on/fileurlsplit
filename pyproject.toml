@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fileurlsplit"
+version = "0.0.1"
+authors = [
+  { name="W.A.Gomes", email="author@example.com" },
+]
+description = "Handles file url divisions, such as path, name and extension"
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GPL3 License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/w-a-gomes/fileurlsplit"
+"Bug Tracker" = "https://github.com/w-a-gomes/fileurlsplit/issues"
