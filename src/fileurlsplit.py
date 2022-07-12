@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import os
 import re
+import string
+import sys
 import urllib.parse
 
 
@@ -61,6 +63,9 @@ class FileUrlSplit(object):
     >>> file_url_split.extension
     '.png'
     """
+    __platform = None
+    __invalid_chars = None
+    __invalid_names = None
 
     def __init__(self, file_url: str) -> None:
         """Constructor
@@ -77,6 +82,7 @@ class FileUrlSplit(object):
 
         :param file_url: URL string
         """
+        self.__set_invalid_chars()
         self.__url = self.__get_url(file_url)
         self.__path = self.__get_path()
         self.__filename = self.__get_filename()
@@ -336,6 +342,70 @@ class FileUrlSplit(object):
     def __get_name(self) -> str:
         # Returns the file name without the extension
         return self.__filename.replace(self.__extension, '')
+
+    def __set_invalid_chars(self) -> None:
+        if not self.__platform:
+            if sys.platform.startswith('linux'):
+                self.__platform = 'Linux'
+                self.__invalid_chars = ['/', '\\']  # Linux
+
+            elif 'bsd' in sys.platform:
+                self.__platform = 'BSD'
+                self.__invalid_chars = ['/', '\\', ':']
+
+            elif 'darwin' in sys.platform:
+                self.__platform = 'Mac'
+                self.__invalid_chars = ['/', '\\', ':']
+
+            elif 'win' in sys.platform or 'msys' in sys.platform:
+                self.__platform = 'Windows'
+                self.__invalid_chars = [
+                    '\\', '/', ':', '*', '?', '"', '<', '>', '|']
+                self.__invalid_names = [
+                    'CON', 'PRN', 'AUX', 'NUL', 'COM0', 'COM1', 'COM2', 'COM3',
+                    'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9', 'LPT0',
+                    'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7',
+                    'LPT8', 'LPT9']
+            else:
+                self.__platform = 'Another'
+                self.__invalid_chars = [
+                    x for x in string.punctuation
+                    if x not in ['~', ' ', '-', '_', '.']]
+
+    def __check_invalid_chars(self, str_to_check: str) -> None:
+        for invalid_char in self.__invalid_chars:
+            if invalid_char in str_to_check:
+                raise InvalidCharacterError(f"Cannot contain '{invalid_char}'")
+
+        if self.__invalid_names:
+            if str_to_check in self.__invalid_names:
+                raise InvalidCharacterError(
+                    f'The name "{str_to_check}" is reserved and cannot be '
+                    'used.')
+
+    def __check_invalid_path(self, file_path: str):
+        for dir_name in file_path.split('/'):
+            self.__check_invalid_chars(str_to_check=dir_name)
+
+    def __check_invalid_url(self, file_url: str) -> None:
+        self.__check_invalid_path(file_path=file_url)
+
+    def __check_invalid_filename(self, filename: str) -> None:
+        self.__check_invalid_chars(str_to_check=filename)
+        if len(filename + self.__extension) > 255:
+            raise FilenameTooLongError(
+                'Filename too long. The file name together with the extension '
+                'cannot exceed the limit of 255 characters.')
+
+    def __check_invalid_file_name(self, file_name: str) -> None:
+        self.__check_invalid_filename(filename=file_name)
+
+    def __check_invalid_extension(self, file_extension: str) -> None:
+        self.__check_invalid_chars(str_to_check=file_extension)
+        if len(self.__name + file_extension) > 255:
+            raise FilenameTooLongError(
+                'File extension too large. The file name together with the '
+                'extension cannot exceed the limit of 255 characters.')
 
     def __repr__(self):
         return f'FileUrlSplit("{self.__url}")'

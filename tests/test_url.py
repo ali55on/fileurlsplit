@@ -10,6 +10,14 @@ class TestUrl(unittest.TestCase):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
         self.assertEqual(file_url.url, '/home/user/text.txt')
 
+    def test_url_only_path_without_file(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/')
+        self.assertEqual(file_url.url, '/home/user/')
+        self.assertEqual(file_url.path, '/home/user/')
+        self.assertEqual(file_url.filename, '')
+        self.assertEqual(file_url.name, '')
+        self.assertEqual(file_url.extension, '')
+
     def test_url_with_file_prefix(self):
         file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')
         self.assertEqual(file_url.url, '/home/user/text.txt')
