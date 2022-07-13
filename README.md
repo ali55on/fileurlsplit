@@ -12,7 +12,10 @@ work with the string.
 No dependencies, just use the standard library.
 
 #### Definition:
-    FileUrlSplit(file_url: str)
+
+```
+FileUrlSplit(file_url: str = None)
+```
 
 **file_url** (*str*): It is the only parameter of this class, and receives 
 as an argument, a string that represents the url of a file.
