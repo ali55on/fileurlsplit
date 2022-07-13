@@ -2,12 +2,9 @@
 
 https://github.com/w-a-gomes/fileurlsplit
 
-A python class that handles file url divisions, such as path, name and 
-extension.
+A python class that handles file url splits such as path, name and extension.
 
-It will not check if the file from the given URL already exists, nor will it 
-change the name or path of an actual file. The point is just to split and 
-work with the string.
+It only works with the "string" and does not check if the given URL file exists, nor does it change the name or path of an actual file.
 
 No dependencies, just use the standard library.
 
@@ -15,13 +12,14 @@ No dependencies, just use the standard library.
 
 ```
 FileUrlSplit(file_url: str = None)
-```
+``` 
 
-**file_url** (*str*): It is the only parameter of this class, and receives 
-as an argument, a string that represents the url of a file.
+**file_url**: It is an **optional** parameter of type "**str**". 
+It is the only parameter of this class, and takes as an argument, a string 
+that represents the url of a file.
 
-If the URL contains backslashes '\\', then it must 
-be escaped or passed as a raw string, like: r'c:\path', 'c:\\\path'
+If the URL contains backslashes '\\', it must be escaped or passed as a raw 
+string, like: r'c:\path', 'c:\\\path'
 
 ```Python console
 >>> file_url = FileUrlSplit(file_url='file:///home/user/photo.png')
@@ -30,20 +28,22 @@ FileUrlSplit("/home/user/photo.png")
 ```
 
 #### Validation:
-Not all error checks are performed upon object instantiation. 
-This is because it is implied that the URL passed is a valid URL where the 
-path, name and extension were taken from a real OS. The goal is to avoid 
-processing unnecessary checks. It's a bit faster and can be really significant 
-when working with very large batches of files.
+Not all error checks are performed on object instantiation. 
+This is because it is more common for the URL passed to be a valid URL, 
+where the path, name and extension were taken from an actual operating system.
+
+The purpose of this approach is to avoid unnecessary checks. It's a bit faster 
+and can be really significant when working with very large batches of files.
 
 When an object is instantiated, the only check performed is whether the URL 
-passed is an absolute URL. Character and name validations are performed when 
-setting a property (setter - setattr)
+passed in is an absolute URL. The other validations like character and name 
+error, are performed using the setter, i.e. when setting the value of a 
+property (setter - setattr)
 
-If the URL of the object to be instantiated has not been taken from a real 
-context, and you want all error checking to occur, then instantiate an empty 
-object (will automatically create a root URL like '/'), and use the "url" 
-property to configure it. Example:
+If the URL was not taken from a real context, and therefore you want all the 
+error checking to take place, then instantiate an empty object 
+(this will automatically create a root URL like '/') and use the "url" 
+property setter. Example:
 
 Checks only if the URL is absolute: (Use for existing url)
 ```Python console
@@ -122,13 +122,24 @@ new "/home/user/fileurlsplit/src/New name 1.py"
 >>>
 ```
 
+Relevant details to remember is when we use the "name" property to remove the 
+file name. If the file has an extension, then the extension is recognized as 
+the filename. This is exactly what happens when we rename a file by removing 
+its name.
+```Python console
+>>> file_url = FileUrlSplit('/home/user/book.pdf')
+>>> print(f"'{file_url.filename}', '{file_url.name}', '{file_url.extension}'")
+'book.pdf', 'book', '.pdf'
+>>> 
+>>> file_url.name = ''
+>>> 
+>>> print(f"'{file_url.filename}', '{file_url.name}', '{file_url.extension}'")
+'.pdf', '.pdf', ''
+>>> 
+```
 #### Exception:
 (*AbsolutePathError*): Raised when a passed URL doesn't have an absolute path
 prefix like a slash "/" or "file://".
-
-(*FileUrlNotAPathError*): Raised when the URL passed ends with a slash "/", as 
-if it were a path without the file at the end. 
-To pass paths use the "path" property
 
 (*InvalidCharacterError*): Raised when the string contains a character 
 not allowed.
