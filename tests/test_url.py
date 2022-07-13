@@ -67,6 +67,17 @@ class TestUrlRaises(unittest.TestCase):
             file_url_split.AbsolutePathError,
             setattr, file_url, 'url', 'user/Downloads/text.txt')
 
+    def test_new_url_like_a_path(self):
+        file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')
+
+        self.assertRaises(
+            file_url_split.FileUrlNotAPathError,
+            setattr, file_url, 'url', '/home/user/Downloads/')
+
+        self.assertRaises(
+            file_url_split.FileUrlNotAPathError,
+            setattr, file_url, 'url', 'file:/home/user/Downloads/')
+
 
 if __name__ == '__main__':
     # No third-party testing coverage

@@ -25,6 +25,13 @@ class AbsolutePathError(Error):
     pass
 
 
+class FileUrlNotAPathError(Error):
+    """Raised when the URL passed ends with a slash "/", as if it were a
+    path without the file at the end.
+    """
+    pass
+
+
 class InvalidCharacterError(Error):
     """Raised when the string contains a character not allowed
     for the desired action.
@@ -111,8 +118,11 @@ class FileUrlSplit(object):
         :param file_url: New URL string
         """
         if file_url != self.__url:
+            # Is path, not URL
             if file_url[-1] == '/':
-                file_url = file_url[:-1]
+                raise FileUrlNotAPathError(
+                    "File URL doesn't end with slash '/', because it's not a "
+                    "path (without the file at the end)")
 
             # Clean path: AbsolutePathError
             file_url = self.__get_url(file_url=file_url)
