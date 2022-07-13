@@ -58,6 +58,75 @@ class TestUrl(unittest.TestCase):
         file_url.url = 'c:/home/user/Desktop/image.png'
         self.assertEqual(file_url.url, '/home/user/Desktop/image.png')
 
+    def test_none_str_url(self):
+        file_url = file_url_split.FileUrlSplit('')
+        self.assertEqual(file_url.url, '/')
+        self.assertEqual(file_url.path, '/')
+        self.assertEqual(file_url.filename, '')
+        self.assertEqual(file_url.name, '')
+        self.assertEqual(file_url.extension, '')
+
+    def test_none_url(self):
+        file_url = file_url_split.FileUrlSplit(None)
+        self.assertEqual(file_url.url, '/')
+        self.assertEqual(file_url.path, '/')
+        self.assertEqual(file_url.filename, '')
+        self.assertEqual(file_url.name, '')
+        self.assertEqual(file_url.extension, '')
+
+    def test_none_obj_and_set_url(self):
+        file_url = file_url_split.FileUrlSplit()
+        self.assertEqual(file_url.url, '/')
+        self.assertEqual(file_url.path, '/')
+        self.assertEqual(file_url.filename, '')
+        self.assertEqual(file_url.name, '')
+        self.assertEqual(file_url.extension, '')
+
+        file_url.url = '/my/dummy/URL.test'
+        self.assertEqual(file_url.url, '/my/dummy/URL.test')
+        self.assertEqual(file_url.path, '/my/dummy/')
+        self.assertEqual(file_url.filename, 'URL.test')
+        self.assertEqual(file_url.name, 'URL')
+        self.assertEqual(file_url.extension, '.test')
+
+    def test_none_obj_url(self):
+        file_url = file_url_split.FileUrlSplit()
+        self.assertEqual(file_url.url, '/')
+        self.assertEqual(file_url.path, '/')
+        self.assertEqual(file_url.filename, '')
+        self.assertEqual(file_url.name, '')
+        self.assertEqual(file_url.extension, '')
+
+    def test_min_path_url(self):
+        file_url = file_url_split.FileUrlSplit('/')
+        self.assertEqual(file_url.url, '/')
+        self.assertEqual(file_url.path, '/')
+        self.assertEqual(file_url.filename, '')
+        self.assertEqual(file_url.name, '')
+        self.assertEqual(file_url.extension, '')
+
+        file_url = file_url_split.FileUrlSplit('/x/')
+        self.assertEqual(file_url.url, '/x/')
+        self.assertEqual(file_url.path, '/x/')
+        self.assertEqual(file_url.filename, '')
+        self.assertEqual(file_url.name, '')
+        self.assertEqual(file_url.extension, '')
+
+    def test_min_file_url(self):
+        file_url = file_url_split.FileUrlSplit('/x')
+        self.assertEqual(file_url.url, '/x')
+        self.assertEqual(file_url.path, '/')
+        self.assertEqual(file_url.filename, 'x')
+        self.assertEqual(file_url.name, 'x')
+        self.assertEqual(file_url.extension, '')
+
+        file_url = file_url_split.FileUrlSplit('/tmp')
+        self.assertEqual(file_url.url, '/tmp')
+        self.assertEqual(file_url.path, '/')
+        self.assertEqual(file_url.filename, 'tmp')
+        self.assertEqual(file_url.name, 'tmp')
+        self.assertEqual(file_url.extension, '')
+
 
 class TestUrlRaises(unittest.TestCase):
 

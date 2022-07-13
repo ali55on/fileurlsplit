@@ -12,7 +12,7 @@ class Error(Exception):
 
 
 class FilenameTooLongError(Error):
-    """Raised when the file name is too long.
+    """Raised when the filename (with extension) is too long.
     Usually longer than 255 characters.
     """
     pass
@@ -40,8 +40,8 @@ class InvalidCharacterError(Error):
 
 
 class InvalidFilenameError(Error):
-    """Raised when the string contains a character not allowed
-    for the desired action.
+    """
+    when the name is reserved for the exclusive use of the operating system.
     """
     pass
 
@@ -51,7 +51,9 @@ class FileUrlSplit(object):
 
     From the file you can get the full url, extension, name or path.
 
-    Use '/path', 'c:\\path', or 'file:///path'
+    If the URL contains backslashes '\\', then it must be escaped or passed
+    as a raw string, like: r'c:\path', 'c:\\\path'
+
     >>> file_url_split = FileUrlSplit(file_url='file:///home/user/photo.png')
 
     >>> print(file_url_split)
@@ -81,7 +83,7 @@ class FileUrlSplit(object):
     __invalid_chars = None
     __invalid_names = None
 
-    def __init__(self, file_url: str) -> None:
+    def __init__(self, file_url: str = None) -> None:
         """Constructor
 
         It will not be checked if the file from the passed URL already exists.
@@ -330,6 +332,9 @@ class FileUrlSplit(object):
         # Decode url-encode and remove prefix like "file://", "c:/"
         # raise: AbsolutePathError
 
+        if not file_url:
+            return '/'
+
         # Fix slash
         file_url = file_url.replace('\\', '/')
 
@@ -337,6 +342,7 @@ class FileUrlSplit(object):
         absolute_path_error_msg = (
             'You need an absolute URL like: '
             '"/path", "file://path", "file:///path" or "c:/path"')
+
         prefix_match = re.search(r'^\w+:', file_url)  # file prefix -> c: file:
         if prefix_match:
             if file_url[prefix_match.end():][0] != '/':
@@ -347,10 +353,12 @@ class FileUrlSplit(object):
 
         # Match - remove prefix like "file://", "c:/"
         match = re.search(r'/\w.+$', file_url)
+        if match:
+            file_url = file_url[match.start():match.end()]
 
         # Decode url
         return urllib.parse.unquote(
-            string=file_url[match.start():match.end()],
+            string=file_url,
             encoding='utf-8',
             errors='replace')
 
