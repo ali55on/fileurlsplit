@@ -116,6 +116,10 @@ class FileUrlSplit(object):
         Example: '/path', 'c:/path', 'file:///path'.
 
         :param file_url: New URL string
+        :raises FileUrlNotAPathError: When the URL passed ends with a slash '/'
+        :raises AbsolutePathError: When URL passed is not absolute
+        :raises InvalidCharacterError: If URL passed contains reserved chars
+        :raises FilenameTooLongError: File name with the extension is too long
         """
         if file_url != self.__url:
             # Is path, not URL
@@ -136,9 +140,9 @@ class FileUrlSplit(object):
 
             # Update the affected properties
             self.__path = self.__get_path()
-            self.__filename = self.__get_filename()
-            self.__extension = self.__get_extension()
-            self.__name = self.__get_name()
+            self.__filename = self.__get_filename()  # FilenameTooLongError
+            self.__extension = self.__get_extension()  # FilenameTooLongError
+            self.__name = self.__get_name()  # FilenameTooLongError
 
     @property
     def path(self) -> str:
@@ -160,6 +164,8 @@ class FileUrlSplit(object):
         This also updates the 'url' propertie.
 
         :param file_path: New path URL string
+        :raises AbsolutePathError: When path passed is not absolute
+        :raises InvalidCharacterError: If path passed contains reserved chars
         """
         if file_path != self.__path:
             if file_path[-1] != '/':
@@ -201,6 +207,8 @@ class FileUrlSplit(object):
         property.
 
         :param file_name: String containing the file name
+        :raises InvalidCharacterError: If name passed contains reserved chars
+        :raises FilenameTooLongError: File name with the extension is too long
         """
         if file_name != self.__name:
             # Valid file name chars: InvalidCharacterError
@@ -238,6 +246,8 @@ class FileUrlSplit(object):
         existing extension, use the "name" property of this class.
 
         :param filename: String containing the filename
+        :raises InvalidCharacterError: If name passed contains reserved chars
+        :raises FilenameTooLongError: File name with the extension is too long
         """
         if filename != self.__filename:
             # Valid filename chars: InvalidCharacterError
@@ -271,6 +281,8 @@ class FileUrlSplit(object):
         This also updates the 'url', and 'filename'properties.
 
         :param file_extension: String containing the filename extension
+        :raises InvalidCharacterError: If name passed contains reserved chars
+        :raises FilenameTooLongError: File name with the extension is too long
         """
         if file_extension != self.__extension:
             # Valid extension chars: InvalidCharacterError
