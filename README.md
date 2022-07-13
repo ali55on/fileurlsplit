@@ -29,21 +29,21 @@ FileUrlSplit("/home/user/photo.png")
 
 #### Validation:
 Not all error checks are performed on object instantiation. 
-This is because it is more common for the URL passed to be a valid URL, 
-where the path, name and extension were taken from an actual operating system.
+This is because it is common to pass a valid URL, where the path, name and 
+extension were taken from a real OS.
 
 The purpose of this approach is to avoid unnecessary checks. It's a bit faster 
 and can be really significant when working with very large batches of files.
 
 When an object is instantiated, the only check performed is whether the URL 
-passed in is an absolute URL. The other validations like character and name 
-error, are performed using the setter, i.e. when setting the value of a 
+passed in is an absolute URL. The other validations such as character and name 
+error are performed using the setter, that is, when we set the value of a 
 property (setter - setattr)
 
-If the URL was not taken from a real context, and therefore you want all the 
-error checking to take place, then instantiate an empty object 
-(this will automatically create a root URL like '/') and use the "url" 
-property setter. Example:
+If the URL wasn't taken from a real context, and for that reason you want all 
+the error checking to be performed, then instantiate an empty object 
+(this will automatically create a root URL like '/') and use the property 
+setter "url". Example:
 
 Checks only if the URL is absolute: (Use for existing url)
 ```Python console
