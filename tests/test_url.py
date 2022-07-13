@@ -61,7 +61,7 @@ class TestUrl(unittest.TestCase):
 
 class TestUrlRaises(unittest.TestCase):
 
-    def test_new_url_raises(self):
+    def test_new_relative_url_raises(self):
         file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')
         self.assertRaises(
             file_url_split.AbsolutePathError,
