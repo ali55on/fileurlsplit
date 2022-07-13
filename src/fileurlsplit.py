@@ -118,7 +118,8 @@ class FileUrlSplit(object):
             file_url = self.__get_url(file_url=file_url)
 
             # Valid URL chars: InvalidCharacterError
-            self.__check_invalid_chars_in_url(file_url=file_url)
+            for dir_name in file_url.split('/'):  # Invalid chars in dirs
+                self.__check_invalid_chars_in_string(str_to_check=dir_name)
 
             # Update URL
             self.__url = self.__get_url(file_url)
@@ -158,7 +159,8 @@ class FileUrlSplit(object):
             file_path = self.__get_url(file_url=file_path)
 
             # Valid path chars: InvalidCharacterError
-            self.__check_invalid_chars_in_path(file_path=file_path)
+            for dir_name in file_path.split('/'):  # Invalid chars in dirs
+                self.__check_invalid_chars_in_string(str_to_check=dir_name)
 
             # Update path
             self.__path = file_path
@@ -192,7 +194,7 @@ class FileUrlSplit(object):
         """
         if file_name != self.__name:
             # Valid file name chars: InvalidCharacterError
-            self.__check_invalid_chars_in_file_name(file_name)
+            self.__check_invalid_chars_in_string(str_to_check=file_name)
 
             # Valid len size
             if len(file_name + self.__extension) > 255:
@@ -229,7 +231,7 @@ class FileUrlSplit(object):
         """
         if filename != self.__filename:
             # Valid filename chars: InvalidCharacterError
-            self.__check_invalid_chars_in_filename(filename=filename)
+            self.__check_invalid_chars_in_string(str_to_check=filename)
 
             # Valid len size
             if len(filename) > 255:
@@ -262,8 +264,7 @@ class FileUrlSplit(object):
         """
         if file_extension != self.__extension:
             # Valid extension chars: InvalidCharacterError
-            self.__check_invalid_chars_in_extension(
-                file_extension=file_extension)
+            self.__check_invalid_chars_in_string(str_to_check=file_extension)
 
             # Fix dot
             if file_extension[0] != '.':
@@ -403,23 +404,6 @@ class FileUrlSplit(object):
                 raise InvalidCharacterError(
                     f'The name "{str_to_check}" is reserved and cannot be '
                     'used.')
-
-    def __check_invalid_chars_in_path(self, file_path: str) -> None:
-        # Invalid chars in dirs
-        for dir_name in file_path.split('/'):
-            self.__check_invalid_chars_in_string(str_to_check=dir_name)
-
-    def __check_invalid_chars_in_url(self, file_url: str) -> None:
-        self.__check_invalid_chars_in_path(file_path=file_url)
-
-    def __check_invalid_chars_in_filename(self, filename: str) -> None:
-        self.__check_invalid_chars_in_string(str_to_check=filename)
-
-    def __check_invalid_chars_in_file_name(self, file_name: str) -> None:
-        self.__check_invalid_chars_in_filename(filename=file_name)
-
-    def __check_invalid_chars_in_extension(self, file_extension: str) -> None:
-        self.__check_invalid_chars_in_string(str_to_check=file_extension)
 
     def __repr__(self):
         return f'FileUrlSplit("{self.__url}")'
