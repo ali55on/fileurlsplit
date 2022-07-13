@@ -25,13 +25,6 @@ class AbsolutePathError(Error):
     pass
 
 
-class FileUrlNotAPathError(Error):
-    """Raised when the URL passed ends with a slash "/", as if it were a
-    path without the file at the end.
-    """
-    pass
-
-
 class InvalidCharacterError(Error):
     """Raised when the string contains a character not allowed
     for the desired action.
@@ -125,28 +118,21 @@ class FileUrlSplit(object):
         Example: '/path', 'c:/path', 'file:///path'.
 
         :param file_url: New URL string
-        :raises FileUrlNotAPathError: When the URL passed ends with a slash '/'
         :raises AbsolutePathError: When URL passed is not absolute
         :raises InvalidCharacterError: If URL passed contains reserved chars
         :raises FilenameTooLongError: File name with the extension is too long
         """
         if file_url != self.__url:
-            # Is path, not URL
-            if file_url[-1] == '/':
-                raise FileUrlNotAPathError(
-                    "File URL doesn't end with slash '/', because it's not a "
-                    "path (without the file at the end)")
-
             # Clean path: AbsolutePathError
             file_url = self.__get_url(file_url=file_url)
 
             # Valid URL chars: InvalidCharacterError
             for dir_name in file_url.split('/'):
                 # Invalid chars in dirs
-                self.__check_invalid_chars_in_string(str_to_check=dir_name)
+                self.__check_invalid_chars(str_to_check=dir_name)
 
                 # Invalid dir name: InvalidCharacterError
-                self.__check_invalid_name_string(name_string=dir_name)
+                self.__check_invalid_names(name_string=dir_name)
 
             # Update URL
             self.__url = self.__get_url(file_url)
@@ -190,10 +176,10 @@ class FileUrlSplit(object):
             # Valid path chars: InvalidCharacterError
             for dir_name in file_path.split('/'):
                 # Invalid chars in dirs
-                self.__check_invalid_chars_in_string(str_to_check=dir_name)
+                self.__check_invalid_chars(str_to_check=dir_name)
 
                 # Invalid dir name: InvalidCharacterError
-                self.__check_invalid_name_string(name_string=dir_name)
+                self.__check_invalid_names(name_string=dir_name)
 
             # Update path
             self.__path = file_path
@@ -228,22 +214,29 @@ class FileUrlSplit(object):
         :raises FilenameTooLongError: File name with the extension is too long
         """
         if file_name != self.__name:
-            # Valid chars in file name: InvalidCharacterError
-            self.__check_invalid_chars_in_string(str_to_check=file_name)
+            if file_name:
+                # Valid chars in file name: InvalidCharacterError
+                self.__check_invalid_chars(str_to_check=file_name)
 
-            # Valid file name: InvalidCharacterError
-            self.__check_invalid_name_string(
-                name_string=file_name + self.__extension)
+                # Valid file name: InvalidCharacterError
+                self.__check_invalid_names(
+                    name_string=file_name + self.__extension)
 
-            # Valid len size
-            if len(file_name + self.__extension) > 255:
-                raise FilenameTooLongError(
-                    'File name too long. The file name together with the '
-                    'extension cannot exceed the limit of 255 characters.')
+                # Valid len size
+                if len(file_name + self.__extension) > 255:
+                    raise FilenameTooLongError(
+                        'File name too long. The file name together with the '
+                        'extension cannot exceed the limit of 255 characters.')
 
-            self.__name = file_name
-            self.__filename = self.__name + self.__extension
-            self.__url = self.__path + self.__filename
+                self.__name = file_name
+                self.__filename = self.__name + self.__extension
+                self.__url = self.__path + self.__filename
+
+            else:
+                self.__name = self.__extension
+                self.__filename = self.__extension
+                self.__url = self.__path + self.__extension
+                self.__extension = ''
 
     @property
     def filename(self) -> str:
@@ -271,17 +264,18 @@ class FileUrlSplit(object):
         :raises FilenameTooLongError: File name with the extension is too long
         """
         if filename != self.__filename:
-            # Valid chars in filename: InvalidCharacterError
-            self.__check_invalid_chars_in_string(str_to_check=filename)
+            if filename:
+                # Valid chars in filename: InvalidCharacterError
+                self.__check_invalid_chars(str_to_check=filename)
 
-            # Valid filename: InvalidCharacterError
-            self.__check_invalid_name_string(name_string=filename)
+                # Valid filename: InvalidCharacterError
+                self.__check_invalid_names(name_string=filename)
 
-            # Valid len size
-            if len(filename) > 255:
-                raise FilenameTooLongError(
-                    'Filename too long. The file name together with the '
-                    'extension cannot exceed the limit of 255 characters.')
+                # Valid len size
+                if len(filename) > 255:
+                    raise FilenameTooLongError(
+                        'Filename too long. The file name together with the '
+                        'extension cannot exceed the limit of 255 characters.')
 
             self.__filename = filename
             self.__url = self.__path + self.__filename
@@ -309,18 +303,20 @@ class FileUrlSplit(object):
         :raises FilenameTooLongError: File name with the extension is too long
         """
         if file_extension != self.__extension:
-            # Valid extension chars: InvalidCharacterError
-            self.__check_invalid_chars_in_string(str_to_check=file_extension)
+            if file_extension:
+                # Valid extension chars: InvalidCharacterError
+                self.__check_invalid_chars(str_to_check=file_extension)
 
-            # Fix dot
-            if file_extension[0] != '.':
-                file_extension = '.' + file_extension
+                # Fix dot
+                if file_extension[0] != '.':
+                    file_extension = '.' + file_extension
 
-            # Valid len size
-            if len(self.__name + file_extension) > 255:
-                raise FilenameTooLongError(
-                    'File extension too long. The file name together with the '
-                    'extension cannot exceed the limit of 255 characters.')
+                # Valid len size
+                if len(self.__name + file_extension) > 255:
+                    raise FilenameTooLongError(
+                        'File extension too long. The file name together with '
+                        'the extension cannot exceed the limit of 255 '
+                        'characters.')
 
             self.__extension = file_extension
             self.__url = self.__path + self.__name + self.__extension
@@ -458,13 +454,13 @@ class FileUrlSplit(object):
                     x for x in string.punctuation
                     if x not in ['~', ' ', '-', '_', '.']]
 
-    def __check_invalid_chars_in_string(self, str_to_check: str) -> None:
+    def __check_invalid_chars(self, str_to_check: str) -> None:
         # raise: InvalidCharacterError
         for invalid_char in self.__invalid_chars:
             if invalid_char in str_to_check:
                 raise InvalidCharacterError(f"Cannot contain '{invalid_char}'")
 
-    def __check_invalid_name_string(self, name_string: str) -> None:
+    def __check_invalid_names(self, name_string: str) -> None:
         if self.__invalid_names:
             if name_string in self.__invalid_names:
                 raise InvalidFilenameError(

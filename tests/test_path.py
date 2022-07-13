@@ -4,7 +4,7 @@ import unittest
 import src.fileurlsplit as file_url_split
 
 
-class TestPath(unittest.TestCase):
+class TestPathProperty(unittest.TestCase):
 
     def test_path(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
@@ -17,6 +17,9 @@ class TestPath(unittest.TestCase):
     def test_only_path(self):
         file_url = file_url_split.FileUrlSplit('/home/user/')
         self.assertEqual(file_url.path, '/home/user/')
+
+
+class TestPathSetter(unittest.TestCase):
 
     def test_new_pure_path(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')

@@ -4,7 +4,7 @@ import unittest
 import src.fileurlsplit as file_url_split
 
 
-class TestName(unittest.TestCase):
+class TestNameProperty(unittest.TestCase):
 
     def test_name(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
@@ -26,12 +26,31 @@ class TestName(unittest.TestCase):
         file_url = file_url_split.FileUrlSplit('/home/user/.text')
         self.assertEqual(file_url.name, '.text')
 
+
+class TestNameSetter(unittest.TestCase):
+
     def test_new_name(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
         file_url.name = 'foo'
         self.assertEqual(file_url.name, 'foo')
         self.assertEqual(file_url.url, '/home/user/foo.txt')
         self.assertEqual(file_url.filename, 'foo.txt')
+
+    def test_remove_name(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
+        file_url.name = ''
+        self.assertEqual(file_url.url, '/home/user/.txt')
+        self.assertEqual(file_url.path, '/home/user/')
+        self.assertEqual(file_url.name, '.txt')
+        self.assertEqual(file_url.filename, '.txt')
+
+    def test_remove_name_without_extension(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/file')
+        file_url.name = ''
+        self.assertEqual(file_url.url, '/home/user/')
+        self.assertEqual(file_url.path, '/home/user/')
+        self.assertEqual(file_url.name, '')
+        self.assertEqual(file_url.filename, '')
 
 
 class TestNameRaises(unittest.TestCase):

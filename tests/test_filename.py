@@ -4,7 +4,7 @@ import unittest
 import src.fileurlsplit as file_url_split
 
 
-class TestFilename(unittest.TestCase):
+class TestFilenameProperty(unittest.TestCase):
 
     def test_filename(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
@@ -26,6 +26,9 @@ class TestFilename(unittest.TestCase):
         file_url = file_url_split.FileUrlSplit('/home/user/.text')
         self.assertEqual(file_url.filename, '.text')
 
+
+class TestFilenameSetter(unittest.TestCase):
+
     def test_new_filename(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
         file_url.filename = 'foo.png'
@@ -33,6 +36,14 @@ class TestFilename(unittest.TestCase):
         self.assertEqual(file_url.name, 'foo')
         self.assertEqual(file_url.url, '/home/user/foo.png')
         self.assertEqual(file_url.extension, '.png')
+
+    def test_remove_filename(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
+        file_url.filename = ''
+        self.assertEqual(file_url.filename, '')
+        self.assertEqual(file_url.name, '')
+        self.assertEqual(file_url.url, '/home/user/')
+        self.assertEqual(file_url.extension, '')
 
 
 class TestFilenameRaises(unittest.TestCase):

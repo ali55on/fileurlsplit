@@ -11,14 +11,6 @@ class TestFileUrlSplit(unittest.TestCase):
             repr(file_url_split.FileUrlSplit('/home/user/text.txt')),
             'FileUrlSplit("/home/user/text.txt")')
 
-    def test_only_path_without_file(self):
-        file_url = file_url_split.FileUrlSplit('/home/user/')
-        self.assertEqual(file_url.url, '/home/user/')
-        self.assertEqual(file_url.path, '/home/user/')
-        self.assertEqual(file_url.filename, '')
-        self.assertEqual(file_url.name, '')
-        self.assertEqual(file_url.extension, '')
-
 
 class TestFileUrlSplitRaises(unittest.TestCase):
 

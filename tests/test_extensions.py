@@ -7,7 +7,7 @@ import unittest
 import src.fileurlsplit as file_url_split
 
 
-class TestExtensions(unittest.TestCase):
+class TestExtensionProperty(unittest.TestCase):
 
     def test_extension(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
@@ -45,6 +45,8 @@ class TestExtensions(unittest.TestCase):
         file_url = file_url_split.FileUrlSplit('/home/user/todo.text.ta.gz')
         self.assertEqual(file_url.extension, '.gz')
 
+
+class TestExtensionSetter(unittest.TestCase):
     def test_new_extension(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
         file_url.extension = '.pdf'
@@ -59,8 +61,16 @@ class TestExtensions(unittest.TestCase):
         self.assertEqual(file_url.url, '/home/user/text.pdf')
         self.assertEqual(file_url.filename, 'text.pdf')
 
+    def test_remove_extension(self):
+        file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
+        file_url.extension = ''
+        self.assertEqual(file_url.extension, '')
+        self.assertEqual(file_url.url, '/home/user/text')
+        self.assertEqual(file_url.filename, 'text')
+        self.assertEqual(file_url.name, 'text')
 
-class TestExtensionsRaises(unittest.TestCase):
+
+class TestExtensionRaises(unittest.TestCase):
 
     def test_new_extension_raises(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
