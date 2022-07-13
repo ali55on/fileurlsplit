@@ -9,7 +9,7 @@ It will not check if the file from the given URL already exists, nor will it
 change the name or path of an actual file. The point is just to split and 
 work with the string.
 
-It also has no dependencies as it only uses the language standard library.
+No dependencies, just use the standard library.
 
 #### Definition:
     FileUrlSplit(file_url: str)
