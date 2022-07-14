@@ -138,10 +138,11 @@ new "/home/user/fileurlsplit/src/New name 1.py"
 >>>
 ```
 
-#### Details:
-Relevant details to remember is when we use the "name" property to remove the 
-file name. If the file has an extension, then the extension is recognized as 
-the filename. This is exactly what happens when we rename a file by removing 
+#### Note:
+Attention to details. For example, a relevant detail to remember is when we 
+use the "name" property to remove the file name. If the file has an extension, 
+then the extension is recognized as the filename. 
+This is exactly what happens when we rename a file by removing 
 its name.
 ```Python console
 >>> file_url = FileUrlSplit(file_url='/home/user/book.pdf')
@@ -154,7 +155,21 @@ its name.
 '.pdf', '.pdf', ''
 >>> 
 ```
-
+Another detail. There is no URL without path. There will always be a path.
+```Python console
+>>> file_url = FileUrlSplit('/home/user/text.txt')
+>>> file_url.url = ''
+>>> 
+>>> print(f"'{file_url.url}', '{file_url.path}', '{file_url.filename}'")
+'/', '/', ''
+>>> 
+>>> file_url = FileUrlSplit('/home/user/text.txt')
+>>> file_url.path = ''
+>>> 
+>>> print(f"'{file_url.url}', '{file_url.path}', '{file_url.filename}'")
+'/text.txt', '/', 'text.txt'
+>>> 
+```
 ## Tests
 Download the Git repository and with the terminal enter the 
 project directory.
