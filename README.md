@@ -47,7 +47,7 @@ setter "url". Example:
 
 Checks only if the URL is absolute: (Use for existing url)
 ```Python console
->>> file_url = FileUrlSplit('/home/user/book.pdf')
+>>> file_url = FileUrlSplit(file_url='/home/user/book.pdf')
 >>>
 ```
 
@@ -127,7 +127,7 @@ file name. If the file has an extension, then the extension is recognized as
 the filename. This is exactly what happens when we rename a file by removing 
 its name.
 ```Python console
->>> file_url = FileUrlSplit('/home/user/book.pdf')
+>>> file_url = FileUrlSplit(file_url='/home/user/book.pdf')
 >>> print(f"'{file_url.filename}', '{file_url.name}', '{file_url.extension}'")
 'book.pdf', 'book', '.pdf'
 >>> 
