@@ -41,6 +41,31 @@ class TestPathSetter(unittest.TestCase):
         self.assertEqual(file_url.path, '/home/user/Desktop/')
         self.assertEqual(file_url.url, '/home/user/Desktop/text.txt')
 
+    def test_remove_path(self):
+        file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')
+        file_url.path = ''
+        self.assertEqual(file_url.url, '/text.txt')
+        self.assertEqual(file_url.path, '/')
+        self.assertEqual(file_url.filename, 'text.txt')
+        self.assertEqual(file_url.name, 'text')
+        self.assertEqual(file_url.extension, '.txt')
+
+        file_url = file_url_split.FileUrlSplit('file:///home/user/text')
+        file_url.path = ''
+        self.assertEqual(file_url.url, '/text')
+        self.assertEqual(file_url.path, '/')
+        self.assertEqual(file_url.filename, 'text')
+        self.assertEqual(file_url.name, 'text')
+        self.assertEqual(file_url.extension, '')
+
+        file_url = file_url_split.FileUrlSplit('file:///home/user/')
+        file_url.path = ''
+        self.assertEqual(file_url.url, '/')
+        self.assertEqual(file_url.path, '/')
+        self.assertEqual(file_url.filename, '')
+        self.assertEqual(file_url.name, '')
+        self.assertEqual(file_url.extension, '')
+
 
 class TestPathRaises(unittest.TestCase):
 

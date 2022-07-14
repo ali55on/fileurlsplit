@@ -166,12 +166,12 @@ class FileUrlSplit(object):
         :raises AbsolutePathError: When path passed is not absolute
         :raises InvalidCharacterError: If path passed contains reserved chars
         """
+        # Clean path: AbsolutePathError
+        file_path = self.__get_url(file_url=file_path)
+
         if file_path != self.__path:
             if file_path[-1] != '/':
                 file_path = file_path + '/'
-
-            # Clean path: AbsolutePathError
-            file_path = self.__get_url(file_url=file_path)
 
             # Valid path chars: InvalidCharacterError
             for dir_name in file_path.split('/'):
@@ -213,6 +213,10 @@ class FileUrlSplit(object):
         :raises InvalidCharacterError: If name passed contains reserved chars
         :raises FilenameTooLongError: File name with the extension is too long
         """
+        # Decode url
+        file_name = urllib.parse.unquote(
+            string=file_name, encoding='utf-8', errors='replace')
+
         if file_name != self.__name:
             if file_name:
                 # Valid chars in file name: InvalidCharacterError
@@ -263,6 +267,10 @@ class FileUrlSplit(object):
         :raises InvalidCharacterError: If name passed contains reserved chars
         :raises FilenameTooLongError: File name with the extension is too long
         """
+        # Decode url
+        filename = urllib.parse.unquote(
+            string=filename, encoding='utf-8', errors='replace')
+
         if filename != self.__filename:
             if filename:
                 # Valid chars in filename: InvalidCharacterError
@@ -302,6 +310,10 @@ class FileUrlSplit(object):
         :raises InvalidCharacterError: If name passed contains reserved chars
         :raises FilenameTooLongError: File name with the extension is too long
         """
+        # Decode url
+        file_extension = urllib.parse.unquote(
+            string=file_extension, encoding='utf-8', errors='replace')
+
         if file_extension != self.__extension:
             if file_extension:
                 # Valid extension chars: InvalidCharacterError
@@ -328,8 +340,13 @@ class FileUrlSplit(object):
         # Decode url-encode and remove prefix like "file://", "c:/"
         # raise: AbsolutePathError
 
+        # Empt
         if not file_url:
             return '/'
+
+        # Decode url
+        file_url = urllib.parse.unquote(
+            string=file_url, encoding='utf-8', errors='replace')
 
         # Fix slash
         file_url = file_url.replace('\\', '/')
@@ -352,11 +369,7 @@ class FileUrlSplit(object):
         if match:
             file_url = file_url[match.start():match.end()]
 
-        # Decode url
-        return urllib.parse.unquote(
-            string=file_url,
-            encoding='utf-8',
-            errors='replace')
+        return file_url
 
     def __get_path(self) -> str:
         # Returns only the file path

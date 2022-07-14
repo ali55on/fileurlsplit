@@ -88,6 +88,15 @@ class TestUrlProperty(unittest.TestCase):
         self.assertEqual(file_url.name, 'tmp')
         self.assertEqual(file_url.extension, '')
 
+    def test_url_encode(self):
+        file_url = file_url_split.FileUrlSplit(
+            'file%3A%2F%2F%2Fhome%2Fuser%2Fbook.pdf')
+        self.assertEqual(file_url.url, '/home/user/book.pdf')
+        self.assertEqual(file_url.path, '/home/user/')
+        self.assertEqual(file_url.filename, 'book.pdf')
+        self.assertEqual(file_url.name, 'book')
+        self.assertEqual(file_url.extension, '.pdf')
+
 
 class TestUrlSetter(unittest.TestCase):
 
@@ -129,6 +138,31 @@ class TestUrlSetter(unittest.TestCase):
         self.assertEqual(file_url.filename, 'URL.test')
         self.assertEqual(file_url.name, 'URL')
         self.assertEqual(file_url.extension, '.test')
+
+    def test_remove_url(self):
+        file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')
+        file_url.url = ''
+        self.assertEqual(file_url.url, '/')
+        self.assertEqual(file_url.path, '/')
+        self.assertEqual(file_url.filename, '')
+        self.assertEqual(file_url.name, '')
+        self.assertEqual(file_url.extension, '')
+
+    def test_set_min_url(self):
+        file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')
+        file_url.url = '/'
+        self.assertEqual(file_url.url, '/')
+        self.assertEqual(file_url.path, '/')
+        self.assertEqual(file_url.filename, '')
+        self.assertEqual(file_url.name, '')
+        self.assertEqual(file_url.extension, '')
+
+        file_url.url = '/x'
+        self.assertEqual(file_url.url, '/x')
+        self.assertEqual(file_url.path, '/')
+        self.assertEqual(file_url.filename, 'x')
+        self.assertEqual(file_url.name, 'x')
+        self.assertEqual(file_url.extension, '')
 
     def test_new_url_like_a_path(self):
         file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')

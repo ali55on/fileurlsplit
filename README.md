@@ -21,6 +21,8 @@ that represents the url of a file.
 If the URL contains backslashes '\\', it must be escaped or passed as a raw 
 string, like: r'c:\path', 'c:\\\path'
 
+Also accepts URL string as a UrlEncode.
+
 ```Python console
 >>> file_url = FileUrlSplit(file_url='file:///home/user/photo.png')
 >>> print(file_url)
@@ -136,6 +138,7 @@ new "/home/user/fileurlsplit/src/New name 1.py"
 >>>
 ```
 
+#### Details:
 Relevant details to remember is when we use the "name" property to remove the 
 file name. If the file has an extension, then the extension is recognized as 
 the filename. This is exactly what happens when we rename a file by removing 
@@ -151,6 +154,7 @@ its name.
 '.pdf', '.pdf', ''
 >>> 
 ```
+
 ## Tests
 Download the Git repository and with the terminal enter the 
 project directory.
