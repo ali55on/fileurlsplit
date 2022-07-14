@@ -16,12 +16,12 @@ FileUrlSplit(file_url: str = None)
 
 **file_url**: It is an **optional** parameter of type "**str**". 
 It is the only parameter of this class, and takes as an argument, a string 
-that represents the url of a file.
+that represents the URL of a file.
 
 If the URL contains backslashes '\\', it must be escaped or passed as a raw 
 string, like: r'c:\path', 'c:\\\path'
 
-Also accepts URL string as a UrlEncode.
+Also accepts string as a UrlEncode.
 
 ```Python console
 >>> file_url = FileUrlSplit(file_url='file:///home/user/photo.png')
