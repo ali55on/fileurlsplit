@@ -17,16 +17,37 @@ FileUrlSplit(file_url: str = None)
 **file_url**: It is an **optional** parameter of type "**str**". 
 It is the only parameter of this class, and takes as an argument, a string 
 that represents the URL of a file.
+```Python console
+>>> file_url = FileUrlSplit(file_url='file:///home/user/book.pdf')
+>>> print(file_url)
+FileUrlSplit("/home/user/book.pdf")
+>>>
+>>> file_url = FileUrlSplit(file_url='/home/user/book.pdf')
+>>> file_url.url
+'/home/user/book.pdf'
+>>> 
+```
 
 If the URL contains backslashes '\\', it must be escaped or passed as a raw 
 string, like: r'c:\path', 'c:\\\path'
+```Python console
+>>> file_url = FileUrlSplit(file_url=r'C:\Windows\user\book.pdf')
+>>> file_url.url
+'/Windows/user/book.pdf'
+>>>
+>>> file_url = FileUrlSplit(file_url='C:\\Windows\\user\\book.pdf')
+>>> file_url.url
+'/Windows/user/book.pdf'
+>>> 
+```
 
 Also accepts string as a UrlEncode.
 
 ```Python console
->>> file_url = FileUrlSplit(file_url='file:///home/user/photo.png')
->>> print(file_url)
-FileUrlSplit("/home/user/photo.png")
+>>> file_url = FileUrlSplit('file%3A%2F%2F%2Fhome%2Fuser%2Fbook.pdf')
+>>> file_url.url
+'/home/user/book.pdf'
+>>> 
 ```
 
 #### Validation:
