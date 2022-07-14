@@ -98,7 +98,7 @@ long. Usually longer than 255 characters.
 The properties are 'url', 'path', 'name', 'filename' and 'extension'. See 
 the examples.
 
-url: cleaned of prefixes and UrlEncode
+url: Cleaned of prefixes and UrlEncode
 ```Python console
 >>> file_url.url
 '/home/user/photo.png'
@@ -170,7 +170,7 @@ its name.
 >>> print(f"'{file_url.filename}', '{file_url.name}', '{file_url.extension}'")
 'book.pdf', 'book', '.pdf'
 >>> 
->>> file_url.name = ''
+>>> file_url.name = None
 >>> 
 >>> print(f"'{file_url.filename}', '{file_url.name}', '{file_url.extension}'")
 '.pdf', '.pdf', ''
