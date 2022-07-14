@@ -75,27 +75,27 @@ long. Usually longer than 255 characters.
 The properties are 'url', 'path', 'name', 'filename' and 'extension'. See 
 the examples.
 
-url
+url: cleaned of prefixes and UrlEncode
 ```Python console
 >>> file_url.url
 '/home/user/photo.png'
 ```
-path
+path: Always ends with a slash '/' to maintain consistency
 ```Python console
 >>> file_url.path
 '/home/user/'
 ```
-file name without the extension
+name: Without the extension
 ```Python console
 >>> file_url.name
 'photo'
 ```
-filename with the extension
+filename: With the extension
 ```Python console
 >>> file_url.filename
 'photo.png'
 ```
-extension
+extension: With the dot
 ```Python console
 >>> file_url.extension
 '.png'
