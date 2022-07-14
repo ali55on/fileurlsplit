@@ -213,9 +213,13 @@ class FileUrlSplit(object):
         :raises InvalidCharacterError: If name passed contains reserved chars
         :raises FilenameTooLongError: File name with the extension is too long
         """
-        # Decode url
-        file_name = urllib.parse.unquote(
+        # None | UrlEncode
+        file_name = '' if not file_name else urllib.parse.unquote(
             string=file_name, encoding='utf-8', errors='replace')
+
+        # Decode url
+        # file_name = urllib.parse.unquote(
+        #     string=file_name, encoding='utf-8', errors='replace')
 
         if file_name != self.__name:
             if file_name:
@@ -267,9 +271,13 @@ class FileUrlSplit(object):
         :raises InvalidCharacterError: If name passed contains reserved chars
         :raises FilenameTooLongError: File name with the extension is too long
         """
-        # Decode url
-        filename = urllib.parse.unquote(
+        # None | UrlEncode
+        filename = '' if not filename else urllib.parse.unquote(
             string=filename, encoding='utf-8', errors='replace')
+
+        # Decode url
+        # filename = urllib.parse.unquote(
+        #     string=filename, encoding='utf-8', errors='replace')
 
         if filename != self.__filename:
             if filename:
@@ -310,9 +318,13 @@ class FileUrlSplit(object):
         :raises InvalidCharacterError: If name passed contains reserved chars
         :raises FilenameTooLongError: File name with the extension is too long
         """
-        # Decode url
-        file_extension = urllib.parse.unquote(
+        # None | UrlEncode
+        file_extension = '' if not file_extension else urllib.parse.unquote(
             string=file_extension, encoding='utf-8', errors='replace')
+
+        # Decode url
+        # file_extension = urllib.parse.unquote(
+        #     string=file_extension, encoding='utf-8', errors='replace')
 
         if file_extension != self.__extension:
             if file_extension:
