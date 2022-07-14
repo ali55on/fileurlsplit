@@ -57,6 +57,20 @@ Setter performs all error checks: (Use for dummy URLs)
 >>> file_url.url = '/my/dummy/URL.test'
 >>>
 ```
+
+#### Exception:
+(*AbsolutePathError*): Raised when a passed URL doesn't have an absolute path
+prefix like a slash "/" or "file://".
+
+(*InvalidCharacterError*): Raised when the string contains a character 
+not allowed.
+
+(*InvalidFilenameError*): Raised when the name is reserved for the exclusive 
+use of the operating system
+
+(*FilenameTooLongError*): Raised when the filename (with extension) is too 
+long. Usually longer than 255 characters.
+
 #### Properties:
 The properties are 'url', 'path', 'name', 'filename' and 'extension'. See 
 the examples.
@@ -137,19 +151,6 @@ its name.
 '.pdf', '.pdf', ''
 >>> 
 ```
-#### Exception:
-(*AbsolutePathError*): Raised when a passed URL doesn't have an absolute path
-prefix like a slash "/" or "file://".
-
-(*InvalidCharacterError*): Raised when the string contains a character 
-not allowed.
-
-(*InvalidFilenameError*): Raised when the name is reserved for the exclusive 
-use of the operating system
-
-(*FilenameTooLongError*): Raised when the filename (with extension) is too 
-long. Usually longer than 255 characters.
-
 ## Tests
 Download the Git repository and with the terminal enter the 
 project directory.
