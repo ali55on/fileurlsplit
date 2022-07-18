@@ -82,17 +82,43 @@ Setter performs all error checks: (Use for dummy URLs)
 ```
 
 #### Exception:
-(*AbsolutePathError*): Raised when a passed URL doesn't have an absolute path
-prefix like a slash "/" or "file://".
+- **AbsolutePathError**(*message: str*):
+  
+  Raised when a passed URL doesn't have 
+  an absolute path prefix like a slash "/" or "file://".
+  
+  *Properties*:
+    - **message** (*str*): A message about the error
 
-(*InvalidCharacterError*): Raised when the string contains a character 
-not allowed.
 
-(*InvalidFilenameError*): Raised when the name is reserved for the exclusive 
-use of the operating system
+- **InvalidCharacterError**(*message: str, invalid_character_found: str,
+  all_invalid_characters_list: list*):
 
-(*FilenameTooLongError*): Raised when the filename (with extension) is too 
-long. Usually longer than 255 characters.
+  Raised when the string contains a character not allowed.
+  
+  *Properties*:
+    - **message** (*str*): A message about the error
+    - **invalid_character_found** (*str*): ...
+    - **all_invalid_characters_list** (*list*): ...
+
+
+- **InvalidFilenameError**(*message: str, all_invalid_filename_list: list*):
+  
+  Raised when the name is reserved for the exclusive use of the operating 
+  system.
+  
+  *Properties*:
+    - **message** (*str*): A message about the error
+    - **all_invalid_filename_list** (*list*): ...
+
+
+- **FilenameTooLongError**(*message: str*):
+  
+  Raised when the filename (with extension) is too long. Usually longer than 
+  255 characters.
+  
+  *Properties*:
+    - **message** (*str*): A message about the error
 
 #### Properties:
 The properties are 'url', 'path', 'name', 'filename' and 'extension'. See 
