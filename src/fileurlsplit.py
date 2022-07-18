@@ -15,28 +15,40 @@ class FilenameTooLongError(Error):
     """Raised when the filename (with extension) is too long.
     Usually longer than 255 characters.
     """
-    pass
+    def __init__(self, message: str) -> None:
+        self.message = message
 
 
 class AbsolutePathError(Error):
     """Raised when a passed URL doesn't have an absolute path
     prefix like a slash "/" or "file://".
     """
-    pass
+    def __init__(self, message: str) -> None:
+        self.message = message
 
 
 class InvalidCharacterError(Error):
     """Raised when the string contains a character not allowed
     for the desired action.
     """
-    pass
+    def __init__(
+            self,
+            message: str,
+            invalid_character_found: str,
+            all_invalid_characters_list: list) -> None:
+
+        self.message = message
+        self.invalid_character_found = invalid_character_found
+        self.all_invalid_characters_list = all_invalid_characters_list
 
 
 class InvalidFilenameError(Error):
     """
     when the name is reserved for the exclusive use of the operating system.
     """
-    pass
+    def __init__(self, message: str, all_invalid_filename_list: list) -> None:
+        self.message = message
+        self.all_invalid_filename_list = all_invalid_filename_list
 
 
 class FileUrlSplit(object):
@@ -228,9 +240,10 @@ class FileUrlSplit(object):
 
                 # Valid len size
                 if len(file_name + self.__extension) > 255:
-                    raise FilenameTooLongError(
+                    raise FilenameTooLongError(message=(
                         'File name too long. The file name together with the '
                         'extension cannot exceed the limit of 255 characters.')
+                    )
 
                 self.__name = file_name
                 self.__filename = self.__name + self.__extension
@@ -281,9 +294,10 @@ class FileUrlSplit(object):
 
                 # Valid len size
                 if len(filename) > 255:
-                    raise FilenameTooLongError(
+                    raise FilenameTooLongError(message=(
                         'Filename too long. The file name together with the '
                         'extension cannot exceed the limit of 255 characters.')
+                    )
 
             self.__filename = filename
             self.__url = self.__path + self.__filename
@@ -325,10 +339,10 @@ class FileUrlSplit(object):
 
                 # Valid len size
                 if len(self.__name + file_extension) > 255:
-                    raise FilenameTooLongError(
+                    raise FilenameTooLongError(message=(
                         'File extension too long. The file name together with '
                         'the extension cannot exceed the limit of 255 '
-                        'characters.')
+                        'characters.'))
 
             self.__extension = file_extension
             self.__url = self.__path + self.__name + self.__extension
@@ -359,10 +373,10 @@ class FileUrlSplit(object):
         prefix_match = re.search(r'^\w+:', file_url)  # file prefix -> c: file:
         if prefix_match:
             if file_url[prefix_match.end():][0] != '/':
-                raise AbsolutePathError(absolute_path_error_msg)
+                raise AbsolutePathError(message=absolute_path_error_msg)
         else:
             if file_url[0] != '/':
-                raise AbsolutePathError(absolute_path_error_msg)
+                raise AbsolutePathError(message=absolute_path_error_msg)
 
         # Match - remove prefix like "file://", "c:/"
         match = re.search(r'/\w.+$', file_url)
@@ -471,14 +485,20 @@ class FileUrlSplit(object):
         # raise: InvalidCharacterError
         for invalid_char in self.__invalid_chars:
             if invalid_char in str_to_check:
-                raise InvalidCharacterError(f"Cannot contain '{invalid_char}'")
+                raise InvalidCharacterError(
+                    message=f"Cannot contain '{invalid_char}'",
+                    invalid_character_found=invalid_char,
+                    all_invalid_characters_list=self.__invalid_chars,
+                )
 
     def __check_invalid_names(self, name_string: str) -> None:
         if self.__invalid_names:
             if name_string in self.__invalid_names:
                 raise InvalidFilenameError(
-                    f'The name "{name_string}" is reserved and cannot be '
-                    f'used.')
+                    message=(f'The name "{name_string}" is reserved and '
+                             'cannot be used.'),
+                    all_invalid_filename_list=self.__invalid_names,
+                )
 
     def __repr__(self):
         return f'FileUrlSplit("{self.__url}")'
