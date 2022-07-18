@@ -2,9 +2,9 @@
 
 https://github.com/w-a-gomes/fileurlsplit
 
-A python class that handles file url splits such as path, name and extension.
-
-It only works with the "string" and does not check if the given URL file exists, nor does it change the name or path of an actual file.
+A python ***class*** that handles file url splits such as path, name and 
+extension. It only works with the ***string*** and does not check if the given 
+URL file exists, nor does it change the name or path of an actual file.
 
 No dependencies, just use the standard library.
 
@@ -14,9 +14,9 @@ No dependencies, just use the standard library.
 FileUrlSplit(file_url: str = None)
 ``` 
 
-**file_url**: It is an **optional** parameter of type "**str**". 
-It is the only parameter of this class, and takes as an argument, a string 
-that represents the URL of a file.
+**file_url**: It is an **optional** parameter of type `str`. 
+It is the only parameter of this ***class***, and takes as an argument, a 
+string that represents the URL of a file.
 ```Python console
 >>> file_url = FileUrlSplit(file_url='file:///home/user/book.pdf')
 >>> print(file_url)
@@ -28,8 +28,8 @@ FileUrlSplit("/home/user/book.pdf")
 >>> 
 ```
 
-If the URL contains backslashes '\\', it must be escaped or passed as a raw 
-string, like: r'c:\path', 'c:\\\path'
+If the URL contains backslashes `\\`, it must be escaped or passed as a raw 
+string, like: `r'c:\path'`, `'c:\\\path'`
 ```Python console
 >>> file_url = FileUrlSplit(file_url=r'C:\Windows\user\book.pdf')
 >>> file_url.url
@@ -41,7 +41,7 @@ string, like: r'c:\path', 'c:\\\path'
 >>> 
 ```
 
-Also accepts string as a UrlEncode.
+Also accepts string as a *UrlEncode*.
 
 ```Python console
 >>> file_url = FileUrlSplit('file%3A%2F%2F%2Fhome%2Fuser%2Fbook.pdf')
@@ -60,13 +60,13 @@ and can be really significant when working with very large batches of files.
 
 When an object is instantiated, the only check performed is whether the URL 
 passed in is an absolute URL. The other validations such as character and name 
-error are performed using the setter, that is, when we set the value of a 
+error are performed using the ***setter***, that is, when we set the value of a 
 property (setter - setattr)
 
 If the URL wasn't taken from a real context, and for that reason you want all 
 the error checking to be performed, then instantiate an empty object 
-(this will automatically create a root URL like '/') and use the property 
-setter "url". Example:
+(this will automatically create a root URL like `'/'`) and use the property 
+setter `url`. Example:
 
 Checks only if the URL is absolute: (Use for existing url)
 ```Python console
@@ -74,7 +74,7 @@ Checks only if the URL is absolute: (Use for existing url)
 >>>
 ```
 
-Setter performs all error checks: (Use for dummy URLs)
+The ***setter***'s run all error checks: (Use for dummy URLs)
 ```Python console
 >>> file_url = FileUrlSplit()
 >>> file_url.url = '/my/dummy/URL.test'
@@ -82,6 +82,10 @@ Setter performs all error checks: (Use for dummy URLs)
 ```
 
 #### Exception:
+The `AbsolutePathError` exception can be raised when a ***class*** is 
+instantiated, or when the `path` and `url` ***setters*** are used.
+The other exceptions can be raised by all ***setter***.
+
 - **AbsolutePathError**(*message*):
   Raised when a passed URL doesn't have 
   an absolute path prefix like a slash "/" or "file://".
@@ -108,36 +112,36 @@ Setter performs all error checks: (Use for dummy URLs)
   255 characters.
     - **message** (*str*): A message about the error
 
-#### Properties:
-The properties are 'url', 'path', 'name', 'filename' and 'extension'. See 
+#### Properties examples:
+The properties are `url`, `path`, `name`, `filename` and `extension`. See 
 the examples.
 
-url: Cleaned of prefixes and UrlEncode
+`url`: Cleaned of prefixes and UrlEncode
 ```Python console
 >>> file_url.url
 '/home/user/photo.png'
 ```
-path: Always ends with a slash '/' to maintain consistency
+`path`: Always ends with a slash '/' to maintain consistency
 ```Python console
 >>> file_url.path
 '/home/user/'
 ```
-name: Without the extension
+`name`: Without the extension
 ```Python console
 >>> file_url.name
 'photo'
 ```
-filename: With the extension
+`filename`: With the extension
 ```Python console
 >>> file_url.filename
 'photo.png'
 ```
-extension: With the dot
+`extension`: With the dot
 ```Python console
 >>> file_url.extension
 '.png'
 ```
-#### Setters:
+#### Setters examples:
 Updating a property will affect related properties.
 ```Python console
 >>> print(f"'{file_url.url}', '{file_url.filename}', '{file_url.extension}'")
@@ -173,9 +177,9 @@ new "/home/user/fileurlsplit/src/New name 1.py"
 >>>
 ```
 
-#### Note:
-Attention to details. For example, a relevant detail to remember is when we 
-use the "name" property to remove the file name. If the file has an extension, 
+#### Attention to details!
+For example, a relevant detail to remember is when we 
+use the `name` property to remove the file name. If the file has an extension, 
 then the extension is recognized as the filename. 
 This is exactly what happens when we rename a file by removing 
 its name.
