@@ -82,42 +82,30 @@ Setter performs all error checks: (Use for dummy URLs)
 ```
 
 #### Exception:
-- **AbsolutePathError**(*message: str*):
-  
+- **AbsolutePathError**(*message*):
   Raised when a passed URL doesn't have 
   an absolute path prefix like a slash "/" or "file://".
-  
-  *Properties*:
     - **message** (*str*): A message about the error
 
 
-- **InvalidCharacterError**(*message: str, invalid_character_found: str,
-  all_invalid_characters_list: list*):
-
+- **InvalidCharacterError**(*message, invalid_character_found,
+  all_invalid_characters_list*):
   Raised when the string contains a character not allowed.
-  
-  *Properties*:
     - **message** (*str*): A message about the error
-    - **invalid_character_found** (*str*): ...
-    - **all_invalid_characters_list** (*list*): ...
+    - **invalid_character_found** (*str*): The character that caused the error
+    - **all_invalid_characters_list** (*list*): list of all disallowed characters
 
 
-- **InvalidFilenameError**(*message: str, all_invalid_filename_list: list*):
-  
+- **InvalidFilenameError**(*message, all_invalid_filename_list*):
   Raised when the name is reserved for the exclusive use of the operating 
   system.
-  
-  *Properties*:
     - **message** (*str*): A message about the error
-    - **all_invalid_filename_list** (*list*): ...
+    - **all_invalid_filename_list** (*list*): list of all disallowed filenames
 
 
-- **FilenameTooLongError**(*message: str*):
-  
+- **FilenameTooLongError**(*message*):
   Raised when the filename (with extension) is too long. Usually longer than 
   255 characters.
-  
-  *Properties*:
     - **message** (*str*): A message about the error
 
 #### Properties:
