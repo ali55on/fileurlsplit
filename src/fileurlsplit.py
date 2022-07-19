@@ -177,12 +177,20 @@ class FileUrlSplit(object):
             file_url = self.__get_url(file_url=file_url)
 
             # Valid URL chars: InvalidCharacterError
-            for dir_name in file_url.split('/'):
+            for split_name in file_url.split('/'):
                 # Invalid chars in dirs
-                self.__check_invalid_chars(str_to_check=dir_name)
+                self.__check_invalid_chars(str_to_check=split_name)
 
                 # Invalid dir name: InvalidCharacterError
-                self.__check_invalid_names(name_string=dir_name)
+                self.__check_invalid_names(name_string=split_name)
+
+                # Valid len size
+                if len(split_name) > 255:
+                    raise FilenameTooLongError(
+                        message=(
+                            'File name too long. The file name together with '
+                            'the extension cannot exceed the limit of 255 '
+                            'characters.'))
 
             # Update URL
             self.__url = self.__get_url(file_url)
@@ -224,12 +232,20 @@ class FileUrlSplit(object):
                 file_path = file_path + '/'
 
             # Valid path chars: InvalidCharacterError
-            for dir_name in file_path.split('/'):
+            for split_name in file_path.split('/'):
                 # Invalid chars in dirs
-                self.__check_invalid_chars(str_to_check=dir_name)
+                self.__check_invalid_chars(str_to_check=split_name)
 
                 # Invalid dir name: InvalidCharacterError
-                self.__check_invalid_names(name_string=dir_name)
+                self.__check_invalid_names(name_string=split_name)
+
+                # Valid len size
+                if len(split_name) > 255:
+                    raise FilenameTooLongError(
+                        message=(
+                            'File name too long. The file name together with '
+                            'the extension cannot exceed the limit of 255 '
+                            'characters.'))
 
             # Update path
             self.__path = file_path
@@ -278,10 +294,11 @@ class FileUrlSplit(object):
 
                 # Valid len size
                 if len(file_name + self.__extension) > 255:
-                    raise FilenameTooLongError(message=(
-                        'File name too long. The file name together with the '
-                        'extension cannot exceed the limit of 255 characters.')
-                    )
+                    raise FilenameTooLongError(
+                        message=(
+                            'File name too long. The file name together with '
+                            'the extension cannot exceed the limit of 255 '
+                            'characters.'))
 
                 self.__name = file_name
                 self.__filename = self.__name + self.__extension
@@ -332,10 +349,11 @@ class FileUrlSplit(object):
 
                 # Valid len size
                 if len(filename) > 255:
-                    raise FilenameTooLongError(message=(
-                        'Filename too long. The file name together with the '
-                        'extension cannot exceed the limit of 255 characters.')
-                    )
+                    raise FilenameTooLongError(
+                        message=(
+                            'Filename too long. The file name together with '
+                            'the extension cannot exceed the limit of 255 '
+                            'characters.'))
 
             self.__filename = filename
             self.__url = self.__path + self.__filename
@@ -377,10 +395,11 @@ class FileUrlSplit(object):
 
                 # Valid len size
                 if len(self.__name + file_extension) > 255:
-                    raise FilenameTooLongError(message=(
-                        'File extension too long. The file name together with '
-                        'the extension cannot exceed the limit of 255 '
-                        'characters.'))
+                    raise FilenameTooLongError(
+                        message=(
+                            'File extension too long. The file name together '
+                            'with the extension cannot exceed the limit of '
+                            '255 characters.'))
 
             self.__extension = file_extension
             self.__url = self.__path + self.__name + self.__extension

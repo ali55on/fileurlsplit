@@ -28,8 +28,8 @@ FileUrlSplit("/home/user/book.pdf")
 >>> 
 ```
 
-If the URL contains backslashes `\\`, it must be escaped or passed as a raw 
-string, like: `r'c:\path'`, `'c:\\\path'`
+If the URL contains backslashes ` \ `, it must be escaped or passed as a raw 
+string, like: `r'c:\path'`, `'c:\\path'`
 ```Python console
 >>> file_url = FileUrlSplit(file_url=r'C:\Windows\user\book.pdf')
 >>> file_url.url
@@ -74,7 +74,7 @@ Checks only if the URL is absolute: (Use for existing url)
 >>>
 ```
 
-The ***setter***'s run all error checks: (Use for dummy URLs)
+Setter run all error checks: (Use for dummy URLs)
 ```Python console
 >>> file_url = FileUrlSplit()
 >>> file_url.url = '/my/dummy/URL.test'
@@ -82,9 +82,8 @@ The ***setter***'s run all error checks: (Use for dummy URLs)
 ```
 
 #### Exception:
-The `AbsolutePathError` exception can be raised when a ***class*** is 
-instantiated, or when the `path` and `url` ***setters*** are used.
-The other exceptions can be raised by all ***setter***.
+The `AbsolutePathError` exception can be raised when the `path` and `url` 
+*setters* are used. The other exceptions can be raised by all *setters*.
 
 - **AbsolutePathError**(*message*):
   Raised when a passed URL doesn't have 
