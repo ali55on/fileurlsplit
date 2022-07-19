@@ -57,7 +57,7 @@ class TestWindowsFilenameRaises(unittest.TestCase):
             file_url_split.InvalidFilenameError,
             setattr, file_url, 'filename', 'AUX')
 
-    def test_invalid_path_raises(self):
+    def test_invalid_filename_in_path_raises(self):
         file_url = file_url_split.FileUrlSplit(r'c:\home\user\text.txt')
         self.assertRaises(
             file_url_split.InvalidFilenameError,

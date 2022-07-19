@@ -69,7 +69,7 @@ class TestPathSetter(unittest.TestCase):
 
 class TestPathRaises(unittest.TestCase):
 
-    def test_new_path_raises(self):
+    def test_absolute_path_raises(self):
         file_url = file_url_split.FileUrlSplit('/home/user/text.txt')
         self.assertRaises(
             file_url_split.AbsolutePathError,
@@ -77,6 +77,13 @@ class TestPathRaises(unittest.TestCase):
         # Also works
         with self.assertRaises(file_url_split.AbsolutePathError):
             file_url.path = 'home/user/Downloads'
+
+    def test_filename_too_long_raises(self):
+        file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')
+        text_255_chars = 'text_' * 50 + '.html'
+        self.assertRaises(
+            file_url_split.FilenameTooLongError,
+            setattr, file_url, 'path', '/home/user/' + text_255_chars + '+/')
 
 
 if __name__ == '__main__':

@@ -176,11 +176,18 @@ class TestUrlSetter(unittest.TestCase):
 
 class TestUrlRaises(unittest.TestCase):
 
-    def test_new_relative_url_raises(self):
+    def test_absolute_path_raises(self):
         file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')
         self.assertRaises(
             file_url_split.AbsolutePathError,
             setattr, file_url, 'url', 'user/Downloads/text.txt')
+
+    def test_filename_too_long_raises(self):
+        file_url = file_url_split.FileUrlSplit('file:///home/user/text.txt')
+        text_255_chars = 'text_' * 50 + '.html'
+        self.assertRaises(
+            file_url_split.FilenameTooLongError,
+            setattr, file_url, 'url', '/home/user/text-' + text_255_chars)
 
 
 if __name__ == '__main__':
