@@ -16,7 +16,13 @@ class FilenameTooLongError(Error):
     Usually longer than 255 characters.
     """
     def __init__(self, message: str) -> None:
-        self.message = message
+        super().__init__(message)
+        self.__message = message
+
+    @property
+    def message(self) -> str:
+        """Error message"""
+        return self.__message
 
 
 class AbsolutePathError(Error):
@@ -24,7 +30,13 @@ class AbsolutePathError(Error):
     prefix like a slash "/" or "file://".
     """
     def __init__(self, message: str) -> None:
-        self.message = message
+        super().__init__(message)
+        self.__message = message
+
+    @property
+    def message(self) -> str:
+        """Error message"""
+        return self.__message
 
 
 class InvalidCharacterError(Error):
@@ -36,10 +48,25 @@ class InvalidCharacterError(Error):
             message: str,
             invalid_character_found: str,
             all_invalid_characters_list: list) -> None:
+        super().__init__(message)
+        self.__message = message
+        self.__invalid_character_found = invalid_character_found
+        self.__all_invalid_characters_list = all_invalid_characters_list
 
-        self.message = message
-        self.invalid_character_found = invalid_character_found
-        self.all_invalid_characters_list = all_invalid_characters_list
+    @property
+    def message(self) -> str:
+        """Error message"""
+        return self.__message
+
+    @property
+    def invalid_character_found(self) -> str:
+        """The invalid character found"""
+        return self.__invalid_character_found
+
+    @property
+    def all_invalid_characters_list(self) -> list:
+        """The all invalid characters list"""
+        return self.__all_invalid_characters_list
 
 
 class InvalidFilenameError(Error):
@@ -47,8 +74,19 @@ class InvalidFilenameError(Error):
     when the name is reserved for the exclusive use of the operating system.
     """
     def __init__(self, message: str, all_invalid_filename_list: list) -> None:
-        self.message = message
-        self.all_invalid_filename_list = all_invalid_filename_list
+        super().__init__(message)
+        self.__message = message
+        self.__all_invalid_filename_list = all_invalid_filename_list
+
+    @property
+    def message(self) -> str:
+        """Error message"""
+        return self.__message
+
+    @property
+    def all_invalid_filename_list(self) -> list:
+        """The all invalid filename list"""
+        return self.__all_invalid_filename_list
 
 
 class FileUrlSplit(object):
