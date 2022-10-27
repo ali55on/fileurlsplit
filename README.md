@@ -2,9 +2,8 @@
 
 https://github.com/ali55on/fileurlsplit
 
-A python ***class*** that handles file url splits such as path, name and 
-extension. It only works with the ***string*** and does not check if the given 
-URL file exists, nor does it change the name or path of an actual file.
+A python ***class*** that handles file URL splits such as path, name and 
+extension.
 
 No dependencies, just use the standard library.
 
@@ -51,12 +50,14 @@ Also accepts string as a *UrlEncode*.
 ```
 
 #### Validation:
+This works with an ***string***. Use `os.path.isfile()` to validate 
+an existing URL in the OS.
+
 Not all error checks are performed on object instantiation. 
 This is because it is common to pass a valid URL, where the path, name and 
-extension were taken from a real OS.
-
-The purpose of this approach is to avoid unnecessary checks. It's a bit faster 
-and can be really significant when working with very large batches of files.
+extension were taken from a real OS. The purpose of this approach is to avoid 
+unnecessary checks. It's a bit faster and can be really significant when 
+working with very large batches of files.
 
 When an object is instantiated, the only check performed is whether the URL 
 passed in is an absolute URL. The other validations such as character and name 
