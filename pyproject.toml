@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "fileurlsplit"
-version = "0.0.1"
+version = "1.0"
 authors = [
   { name="W.A.Gomes", email="author@example.com" },
 ]
