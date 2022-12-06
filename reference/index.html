@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://wbin01.github.io/fileurlsplit/reference/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Class Reference - FileUrlSplit</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Class Reference";
+        var mkdocs_page_input_path = "reference.md";
+        var mkdocs_page_url = "/fileurlsplit/reference/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> FileUrlSplit
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Class Reference</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#fileurlsplit">FileUrlSplit</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#extension">extension</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#filename">filename</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#name">name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#path">path</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#url">url</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../validation/">Validation details</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../exceptions/">Exceptions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tests/">Tests</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../about/">About</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">FileUrlSplit</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Class Reference</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="class-reference">Class Reference</h1>
+<h2 id="fileurlsplit">FileUrlSplit</h2>
+<p>(class)</p>
+<p>Definition:</p>
+<pre><code>FileUrlSplit(file_url: str = None)
+</code></pre>
+<p>Properties:</p>
+<ul>
+<li><a href="#extension">extension</a>: str</li>
+<li><a href="#filename">filename</a>: str</li>
+<li><a href="#name">name</a>: str</li>
+<li><a href="#path">path</a>: str</li>
+<li><a href="#url">url</a>: str</li>
+</ul>
+<p>A python class that handles file URL splits such as path, name and extension.</p>
+<p><code>file_url</code>: It is an optional parameter of type <code>str</code>.
+It is the only parameter of this <code>class</code>, and takes as an argument, a
+string that represents the URL of a file.</p>
+<pre><code class="language-Python">&gt;&gt;&gt; file_url = FileUrlSplit(file_url='file:///home/user/book.pdf')
+&gt;&gt;&gt; print(file_url)
+FileUrlSplit(&quot;/home/user/book.pdf&quot;)
+&gt;&gt;&gt;
+&gt;&gt;&gt; file_url = FileUrlSplit(file_url='/home/user/book.pdf')
+&gt;&gt;&gt; file_url.url
+'/home/user/book.pdf'
+&gt;&gt;&gt;
+</code></pre>
+<p>If the URL contains backslashes <code>\</code>, it must be escaped or passed as a raw
+string, like: <code>r'c:\path'</code>, <code>'c:\\path'</code></p>
+<pre><code class="language-Python">&gt;&gt;&gt; file_url = FileUrlSplit(file_url=r'C:\Windows\user\book.pdf')
+&gt;&gt;&gt; file_url.url
+'/Windows/user/book.pdf'
+&gt;&gt;&gt;
+&gt;&gt;&gt; file_url = FileUrlSplit(file_url='C:\\Windows\\user\\book.pdf')
+&gt;&gt;&gt; file_url.url
+'/Windows/user/book.pdf'
+&gt;&gt;&gt;
+</code></pre>
+<p>Also accepts string as a <em>UrlEncode</em>.</p>
+<pre><code class="language-Python">&gt;&gt;&gt; file_url = FileUrlSplit('file%3A%2F%2F%2Fhome%2Fuser%2Fbook.pdf')
+&gt;&gt;&gt; file_url.url
+'/home/user/book.pdf'
+&gt;&gt;&gt;
+</code></pre>
+<h3 id="extension">extension</h3>
+<p>(Property) <code>FileUrlSplit.extension -&gt; str</code></p>
+<p>Get file extension only, without the name and path.</p>
+<pre><code class="language-Python">&gt;&gt;&gt; file_url = FileUrlSplit(file_url='/home/user/photo.png')
+&gt;&gt;&gt; file_url.extension
+'.png'
+</code></pre>
+<h3 id="filename">filename</h3>
+<p>(Property) <code>FileUrlSplit.filename -&gt; str</code></p>
+<p>Filename with the extension but without the path.</p>
+<pre><code class="language-Python">&gt;&gt;&gt; file_url = FileUrlSplit(file_url='/home/user/photo.png')
+&gt;&gt;&gt; file_url.filename
+'photo.png'
+</code></pre>
+<h3 id="name">name</h3>
+<p>(Property) <code>FileUrlSplit.name -&gt; str</code></p>
+<p>Only the file name without the extension and without the path.</p>
+<pre><code class="language-Python">&gt;&gt;&gt; file_url = FileUrlSplit(file_url='/home/user/photo.png')
+&gt;&gt;&gt; file_url.name
+'photo'
+</code></pre>
+<h3 id="path">path</h3>
+<p>(Property) <code>FileUrlSplit.path -&gt; str</code></p>
+<p>Get file path only, without the file name and extension.
+Always ends with a slash '/' to maintain consistency.</p>
+<pre><code class="language-Python">&gt;&gt;&gt; file_url = FileUrlSplit(file_url='/home/user/photo.png')
+&gt;&gt;&gt; file_url.path
+'/home/user/'
+</code></pre>
+<h3 id="url">url</h3>
+<p>(Property) <code>FileUrlSplit.ulr -&gt; str</code></p>
+<p>Cleaned of prefixes and UrlEncode.
+URL without the file prefix, such as "file://".</p>
+<pre><code class="language-Python">&gt;&gt;&gt; file_url = FileUrlSplit(file_url='/home/user/photo.png')
+&gt;&gt;&gt; file_url.url
+'/home/user/photo.png'
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../validation/" class="btn btn-neutral float-right" title="Validation details">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../validation/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

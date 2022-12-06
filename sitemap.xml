@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://wbin01.github.io/fileurlsplit/</loc>
+         <lastmod>2022-12-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://wbin01.github.io/fileurlsplit/about/</loc>
+         <lastmod>2022-12-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://wbin01.github.io/fileurlsplit/exceptions/</loc>
+         <lastmod>2022-12-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://wbin01.github.io/fileurlsplit/reference/</loc>
+         <lastmod>2022-12-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://wbin01.github.io/fileurlsplit/tests/</loc>
+         <lastmod>2022-12-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://wbin01.github.io/fileurlsplit/validation/</loc>
+         <lastmod>2022-12-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+</urlset>
