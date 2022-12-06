@@ -1,6 +1,6 @@
 # FileUrlSplit
 
-https://github.com/w-a-gomes/fileurlsplit
+https://github.com/wbin01/fileurlsplit
 
 A python ***class*** that handles file URL splits such as path, name and 
 extension.
