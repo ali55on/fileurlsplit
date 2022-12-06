@@ -119,6 +119,29 @@ extension.</p>
 &gt;&gt;&gt; print(f&quot;'{file_url.url}', '{file_url.filename}', '{file_url.extension}'&quot;)
 '/home/user/photo.jpg', 'photo.jpg', '.jpg'
 </code></pre>
+<p>Useful for choosing names for multiple files without changing their extensions.</p>
+<pre><code class="language-Python">&gt;&gt;&gt; import os
+&gt;&gt;&gt; from fileurlsplit import FileUrlSplit
+&gt;&gt;&gt;
+&gt;&gt;&gt; files = [
+... FileUrlSplit(os.path.abspath(x)) for x in os.listdir() if os.path.isfile(x)
+... ]
+&gt;&gt;&gt; for num, file_url in enumerate(files):
+...     print(f'old &quot;{file_url.url}&quot;')
+...
+...     file_url.name = f'New name {num}'
+...
+...     print(f'new &quot;{file_url.url}&quot;')
+...     print()
+...
+...
+old &quot;/home/user/fileurlsplit/src/__init__.py&quot;
+new &quot;/home/user/fileurlsplit/src/New name 0.py&quot;
+
+old &quot;/home/user/fileurlsplit/src/fileurlsplit.py&quot;
+new &quot;/home/user/fileurlsplit/src/New name 1.py&quot;
+&gt;&gt;&gt;
+</code></pre>
               
             </div>
           </div><footer>
@@ -166,5 +189,5 @@ extension.</p>
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-12-06 22:24:37.074058+00:00
+Build Date UTC : 2022-12-06 22:45:58.241342+00:00
 -->

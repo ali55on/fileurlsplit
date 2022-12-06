@@ -55,6 +55,10 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#setters-behavior">Setters behavior</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#extensions-are-part-of-the-name">Extensions are part of the name</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#there-is-always-the-path">There is always the path</a>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -129,27 +133,34 @@ setter <code>url</code>. Example:</p>
 &gt;&gt;&gt; print(f&quot;'{file_url.url}', '{file_url.filename}', '{file_url.extension}'&quot;)
 '/home/user/photo.jpg', 'photo.jpg', '.jpg'
 </code></pre>
-<p>Useful for choosing names for multiple files without changing their extensions.</p>
-<pre><code class="language-Python">&gt;&gt;&gt; import os
-&gt;&gt;&gt; from fileurlsplit import FileUrlSplit
+<h2 id="extensions-are-part-of-the-name">Extensions are part of the name</h2>
+<p>When we use the <code>name</code> property to remove the file name. If the file has an extension,
+then the extension is recognized as the filename.
+This is exactly what happens when we rename a file by removing
+its name.</p>
+<pre><code class="language-Python">&gt;&gt;&gt; file_url = FileUrlSplit(file_url='/home/user/book.pdf')
+&gt;&gt;&gt; print(f&quot;'{file_url.filename}', '{file_url.name}', '{file_url.extension}'&quot;)
+'book.pdf', 'book', '.pdf'
 &gt;&gt;&gt;
-&gt;&gt;&gt; files = [
-... FileUrlSplit(os.path.abspath(x)) for x in os.listdir() if os.path.isfile(x)
-... ]
-&gt;&gt;&gt; for num, file_url in enumerate(files):
-...     print(f'old &quot;{file_url.url}&quot;')
-...
-...     file_url.name = f'New name {num}'
-...
-...     print(f'new &quot;{file_url.url}&quot;')
-...     print()
-...
-...
-old &quot;/home/user/fileurlsplit/src/__init__.py&quot;
-new &quot;/home/user/fileurlsplit/src/New name 0.py&quot;
-
-old &quot;/home/user/fileurlsplit/src/fileurlsplit.py&quot;
-new &quot;/home/user/fileurlsplit/src/New name 1.py&quot;
+&gt;&gt;&gt; file_url.name = None
+&gt;&gt;&gt;
+&gt;&gt;&gt; print(f&quot;'{file_url.filename}', '{file_url.name}', '{file_url.extension}'&quot;)
+'.pdf', '.pdf', ''
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="there-is-always-the-path">There is always the path</h2>
+<p>There is no URL without path. There will always be a path.</p>
+<pre><code class="language-Python">&gt;&gt;&gt; file_url = FileUrlSplit('/home/user/text.txt')
+&gt;&gt;&gt; file_url.url = ''
+&gt;&gt;&gt;
+&gt;&gt;&gt; print(f&quot;'{file_url.url}', '{file_url.path}', '{file_url.filename}'&quot;)
+'/', '/', ''
+&gt;&gt;&gt;
+&gt;&gt;&gt; file_url = FileUrlSplit('/home/user/text.txt')
+&gt;&gt;&gt; file_url.path = ''
+&gt;&gt;&gt;
+&gt;&gt;&gt; print(f&quot;'{file_url.url}', '{file_url.path}', '{file_url.filename}'&quot;)
+'/text.txt', '/', 'text.txt'
 &gt;&gt;&gt;
 </code></pre>
               
