@@ -34,3 +34,27 @@ See the [documentation](https://wbin01.github.io/fileurlsplit).
 >>> print(f"'{file_url.url}', '{file_url.filename}', '{file_url.extension}'")
 '/home/user/photo.jpg', 'photo.jpg', '.jpg'
 ```
+Useful for choosing names for multiple files without changing their extensions.
+```Python
+>>> import os
+>>> from fileurlsplit import FileUrlSplit
+>>>
+>>> files = [
+... FileUrlSplit(os.path.abspath(x)) for x in os.listdir() if os.path.isfile(x)
+... ]
+>>> for num, file_url in enumerate(files):
+...     print(f'old "{file_url.url}"')
+...
+...     file_url.name = f'New name {num}'
+...
+...     print(f'new "{file_url.url}"')
+...     print()
+...
+...
+old "/home/user/fileurlsplit/src/__init__.py"
+new "/home/user/fileurlsplit/src/New name 0.py"
+
+old "/home/user/fileurlsplit/src/fileurlsplit.py"
+new "/home/user/fileurlsplit/src/New name 1.py"
+>>>
+```

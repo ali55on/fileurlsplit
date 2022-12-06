@@ -43,28 +43,37 @@ Updating a property will affect related properties.
 >>> print(f"'{file_url.url}', '{file_url.filename}', '{file_url.extension}'")
 '/home/user/photo.jpg', 'photo.jpg', '.jpg'
 ```
-Useful for choosing names for multiple files without changing their extensions.
-```Python
->>> import os
->>> from fileurlsplit import FileUrlSplit
->>>
->>> files = [
-... FileUrlSplit(os.path.abspath(x)) for x in os.listdir() if os.path.isfile(x)
-... ]
->>> for num, file_url in enumerate(files):
-...     print(f'old "{file_url.url}"')
-...
-...     file_url.name = f'New name {num}'
-...
-...     print(f'new "{file_url.url}"')
-...     print()
-...
-...
-old "/home/user/fileurlsplit/src/__init__.py"
-new "/home/user/fileurlsplit/src/New name 0.py"
 
-old "/home/user/fileurlsplit/src/fileurlsplit.py"
-new "/home/user/fileurlsplit/src/New name 1.py"
+## Extensions are part of the name
+When we use the `name` property to remove the file name. If the file has an extension,
+then the extension is recognized as the filename.
+This is exactly what happens when we rename a file by removing
+its name.
+```Python
+>>> file_url = FileUrlSplit(file_url='/home/user/book.pdf')
+>>> print(f"'{file_url.filename}', '{file_url.name}', '{file_url.extension}'")
+'book.pdf', 'book', '.pdf'
+>>>
+>>> file_url.name = None
+>>>
+>>> print(f"'{file_url.filename}', '{file_url.name}', '{file_url.extension}'")
+'.pdf', '.pdf', ''
 >>>
 ```
 
+## There is always the path
+There is no URL without path. There will always be a path.
+```Python
+>>> file_url = FileUrlSplit('/home/user/text.txt')
+>>> file_url.url = ''
+>>>
+>>> print(f"'{file_url.url}', '{file_url.path}', '{file_url.filename}'")
+'/', '/', ''
+>>>
+>>> file_url = FileUrlSplit('/home/user/text.txt')
+>>> file_url.path = ''
+>>>
+>>> print(f"'{file_url.url}', '{file_url.path}', '{file_url.filename}'")
+'/text.txt', '/', 'text.txt'
+>>>
+```
