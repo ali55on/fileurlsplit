@@ -1,12 +1,11 @@
 # FileUrlSplit
 
-[https://github.com/wbin01/fileurlsplit](https://github.com/wbin01/fileurlsplit)
+[https://wbin01.github.io/fileurlsplit](https://wbin01.github.io/fileurlsplit)
 
 A python ***class*** that handles file URL splits such as path, name and
 extension.
 
 No dependencies, just use the standard library.
-See the [documentation](https://wbin01.github.io/fileurlsplit).
 
 ```Python
 >>> file_url = FileUrlSplit(file_url='/home/user/photo.png')

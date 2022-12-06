@@ -94,9 +94,6 @@ class FileUrlSplit(object):
 
     From the file you can get the full url, extension, name or path.
 
-    If the URL contains backslashes '\\', then it must be escaped or passed
-    as a raw string, like: r'c:\path', 'c:\\\path'
-
     >>> file_url_split = FileUrlSplit(file_url='file:///home/user/photo.png')
 
     >>> print(file_url_split)

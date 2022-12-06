@@ -1,0 +1,10 @@
+site_name: FileUrlSplit
+site_url: https://wbin01.github.io/fileurlsplit
+nav:
+    - Home: index.md
+    - Class Reference: reference.md
+    - Validation details: validation.md
+    - Exceptions: exceptions.md
+    - Tests: tests.md
+    - About: about.md
+theme: readthedocs
